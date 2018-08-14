@@ -30,7 +30,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">Upload Json File</a>
+                    <a href="{{route('upload.get')}}">Upload Json File</a>
                 </li>
             </ul>
         </div>
