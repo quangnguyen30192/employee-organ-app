@@ -29,17 +29,14 @@
     </div>
 
     <div class="container">
-        <div class="alert alert-danger" id="errorMessage"></div>
-        <textarea class="form-control" name="" id="jsonTextView" rows="20" cols="30"></textarea>
+        <div class="alert alert-danger collapse" id="errorMessage"></div>
+        <textarea class="form-control collapse" name="" id="jsonTextView" rows="20" cols="30"></textarea>
     </div>
 @endsection
 
 @section('script')
     <script>
         $(document).ready(function (e) {
-
-            $('#jsonTextView').hide();
-            $('#errorMessage').hide();
 
             $("#form").on('submit', (function (e) {
                 e.preventDefault();
