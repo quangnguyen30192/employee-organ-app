@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataProviders\EmployeeDataProvider;
+use App\EmployeeNode;
 use App\Services\EmployeeTreeService;
 use Illuminate\Http\Request;
 
@@ -29,8 +30,24 @@ class IndexController extends Controller
         if ($file) {
             $fileContent = file_get_contents($file);
             $employeeData = $this->employeeDataProvider->parseEmployeeData($fileContent);
-            return dd($employeeData);
+
+            $bossName = $this->employeeTreeService->findBoss($employeeData);
+
+            $boss = new EmployeeNode($bossName);
+            $this->employeeTreeService->buildTree($boss, $employeeData);
+
+            return response()->json([
+                                        'status' => 'success',
+                                        'data' => $boss,
+                                        'message' => 'Load data successfully'
+                                    ]);
         }
-        return "Upload Successfully";
+
+        return response()->json([
+                                    'status' => 'error',
+                                    'data' => null,
+                                    'message' => 'Failed to upload the file'
+                                ]);
+
     }
 }
