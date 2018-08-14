@@ -28,7 +28,13 @@ class IndexController extends Controller
         return view('upload');
     }
 
-    public function postUpload() {
+    public function postUpload(Request $request) {
+        $file = $request->file('file');
+        if ($file) {
+            $fileContent = file_get_contents($file);
+            $employeeData = $this->employeeDataProvider->parseEmployeeData($fileContent);
+            return dd($employeeData);
+        }
         return "Upload Successfully";
     }
 }
