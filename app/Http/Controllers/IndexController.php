@@ -24,11 +24,7 @@ class IndexController extends Controller
         return view('index');
     }
 
-    public function getUpload() {
-        return view('upload');
-    }
-
-    public function postUpload(Request $request) {
+    public function upload(Request $request) {
         $file = $request->file('file');
         if ($file) {
             $fileContent = file_get_contents($file);
