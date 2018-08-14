@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\DataProviders\EmployeeDataProvider;
+use App\DataProviders\EmployeeJsonDataProvider;
+use App\Services\EmployeeTreeService;
+use App\Services\EmployeeTreeServiceImpl;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(EmployeeDataProvider::class, EmployeeJsonDataProvider::class);
+        $this->app->bind(EmployeeTreeService::class, EmployeeTreeServiceImpl::class);
     }
 }
