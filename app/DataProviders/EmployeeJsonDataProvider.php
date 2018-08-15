@@ -13,16 +13,21 @@ use App\Helpers\CommonUtils;
 use InvalidArgumentException;
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
+use Seld\JsonLint\DuplicateKeyException;
+use Seld\JsonLint\JsonParser;
 
 /**
  * The implementation of EmployeeDataProvider that works with the json input file
  */
 class EmployeeJsonDataProvider implements EmployeeDataProvider {
 
+    private $jsonParser;
+
     /**
      * Constructor
      */
     public function __construct() {
+        $this->jsonParser = new JsonParser;
     }
 
     /**
@@ -32,13 +37,20 @@ class EmployeeJsonDataProvider implements EmployeeDataProvider {
      *
      * @return an array of EmployeeSupervisorDtos
      *
-     * @throws InvalidArgumentException if the json string input is invalid
+     * @throws InvalidArgumentException if the json string input is invalid or if the json has duplicate keys
      */
     public function parseEmployeeData($jsonString) {
 
         $json = CommonUtils::isValidJson($jsonString);
         if (!$json) {
             throw new InvalidArgumentException("Json string input is not valid");
+        }
+
+        try {
+            $this->jsonParser->parse($jsonString, JsonParser::DETECT_KEY_CONFLICTS);
+        } catch (DuplicateKeyException $e) {
+            $details = $e->getDetails();
+            throw new InvalidArgumentException('Duplicate key \'' . $details['key'] . '\' at line ' . $details['line']);
         }
 
         $jsonIterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($json), RecursiveIteratorIterator::SELF_FIRST);

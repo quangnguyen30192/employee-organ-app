@@ -90,4 +90,12 @@ class EmployeeJsonDataProviderTest extends TestCase {
         $this->assertSame(array_diff($expected, $actual), []);
     }
 
+    public function testJsonShouldNotHaveDuplicateEmployeeName() {
+        $testString = '{ "Pete": "Nick", "Pete": "Jame", "Nick": "Sophie", "Sophie": "Jonas" }';
+
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Duplicate key \'Pete\' at line 1');
+        $this->employeeDataProvider->parseEmployeeData($testString);
+    }
+
 }
