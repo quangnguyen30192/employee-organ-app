@@ -2,9 +2,11 @@
 
 @section('style')
     <style>
-        #jsonTextView {
+        textarea {
             font-size: 1.6rem;
             font-family: Monaco;
+            height: 30em;
+            width: 100%;
         }
 
         .container {
@@ -18,10 +20,10 @@
     <h1>Employee data upload</h1>
 
     <div class="container">
-        <form id="form" enctype="multipart/form-data">
+        <form id="form" enctype="multipart/form-data" class="form-inline">
             <div class="form-group">
                 <label for="file">Json File :</label>
-                <input type="file" class="form-control" name="file" required>
+                <input type="file" class="form-control" id="upload-file" name="file" required>
             </div>
             <button type="submit" class="btn btn-default btn-primary">Submit</button>
             {{ csrf_field() }}
@@ -29,14 +31,36 @@
     </div>
 
     <div class="container">
-        <div class="alert alert-danger collapse" id="errorMessage"></div>
-        <textarea class="form-control collapse" name="" id="jsonTextView" rows="20" cols="30"></textarea>
+        <div class="form-group collapse" id="jsonViewBefore">
+            <h4>Preview</h4>
+            <textarea name="fileContent"></textarea>
+            <div class="alert alert-danger collapse" id="errorMessage"></div>
+        </div>
+
+
+        <div class="form-group collapse" id="jsonViewAfter">
+            <h4>Result</h4>
+            <textarea></textarea>
+        </div>
     </div>
 @endsection
 
 @section('script')
     <script>
         $(document).ready(function (e) {
+
+            $("#upload-file").change(function () {
+                var file = document.getElementById('upload-file').files[0];
+                var reader = new FileReader();
+                reader.readAsText(file);
+                reader.onload = function (e) {
+                    $('#errorMessage').hide();
+                    $('#jsonViewAfter').hide();
+
+                    $('#jsonViewBefore > textarea').text(e.target.result);
+                    $('#jsonViewBefore').show();
+                };
+            });
 
             $("#form").on('submit', (function (e) {
                 e.preventDefault();
@@ -51,8 +75,8 @@
                     },
                     success: function (result) {
                         if (result.status === 'success') {
-                            $('#jsonTextView').show();
-                            $('#jsonTextView').text(JSON.stringify(result.data, undefined, 4));
+                            $('#jsonViewAfter').show();
+                            $('#jsonViewAfter > textarea').text(JSON.stringify(result.data, undefined, 4));
                         } else if (result.status === 'error') {
                             $('#errorMessage').show();
                             $('#errorMessage').text(result.message);

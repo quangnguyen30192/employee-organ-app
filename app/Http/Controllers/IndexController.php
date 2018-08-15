@@ -6,6 +6,7 @@ use App\DataProviders\EmployeeDataProvider;
 use App\EmployeeNode;
 use App\Services\EmployeeTreeService;
 use Illuminate\Http\Request;
+use InvalidArgumentException;
 
 class IndexController extends Controller
 {
@@ -29,18 +30,31 @@ class IndexController extends Controller
         $file = $request->file('file');
         if ($file) {
             $fileContent = file_get_contents($file);
-            $employeeData = $this->employeeDataProvider->parseEmployeeData($fileContent);
+            $errorMessage = "";
+            try {
+                $employeeData = $this->employeeDataProvider->parseEmployeeData($fileContent);
+                $bossName = $this->employeeTreeService->findBoss($employeeData);
 
-            $bossName = $this->employeeTreeService->findBoss($employeeData);
+                $boss = new EmployeeNode($bossName);
+                $this->employeeTreeService->buildTree($boss, $employeeData);
+            } catch (InvalidArgumentException $exception) {
+                $errorMessage = $exception->getMessage();
+            }
 
-            $boss = new EmployeeNode($bossName);
-            $this->employeeTreeService->buildTree($boss, $employeeData);
 
-            return response()->json([
-                                        'status' => 'success',
-                                        'data' => $boss,
-                                        'message' => 'Load data successfully'
-                                    ]);
+            if ($errorMessage !== "") {
+                return response()->json([
+                                            'status' => 'error',
+                                            'data' => null,
+                                            'message' => $errorMessage
+                                        ]);
+            } else {
+                return response()->json([
+                                            'status' => 'success',
+                                            'data' => $boss,
+                                            'message' => 'Load data successfully'
+                                        ]);
+            }
         }
 
         return response()->json([
