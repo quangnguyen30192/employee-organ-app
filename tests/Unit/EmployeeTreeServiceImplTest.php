@@ -9,6 +9,7 @@
 namespace Tests\Unit;
 
 use App\DataProviders\EmployeeJsonDataProvider;
+use App\EmployeeNode;
 use App\Services\EmployeeTreeServiceImpl;
 use PHPUnit\Framework\TestCase;
 
@@ -73,4 +74,36 @@ class EmployeeTreeServiceImplTest extends TestCase {
         $actual = $this->employeeTreeService->findBoss($employeeData);
         $this->assertSame($actual, "Tina");
     }
+
+    public function testFindEmployeeUnderSupervisor() {
+        $testString = '{ "Pete": "Tina", "Barbara": "Tina" }';
+        $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
+
+        $actual = $this->employeeTreeService->findEmployeesUnderSupervisor("Tina",$employeeData);
+        $expected = ["Pete", "Barbara"];
+
+        $this->assertSame(array_diff($actual, $expected), []);
+    }
+
+    public function testFindEmployeeUnderSupervisorDeepHierarchy() {
+        $testString = '{ "Lucie": "Jame", "Jame": "Pete", "Pete": "Tina", "Barbara": "Tina" }';
+        $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
+
+        $actual = $this->employeeTreeService->findEmployeesUnderSupervisor("Tina", $employeeData);
+        $expected = ["Pete", "Barbara"];
+
+        $this->assertSame(array_diff($actual, $expected), []);
+    }
+
+    public function testBuildTree() {
+        $testString = '{ "Pete": "Nick", "Barbara": "Nick", "Nick": "Sophie", "Sophie": "Jonas" }';
+        $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
+
+        $boss = $this->employeeTreeService->findBoss($employeeData);
+        $rootNode = new EmployeeNode($boss);
+        $this->employeeTreeService->buildTree($rootNode, $employeeData);
+
+        $this->assertSame(json_encode($rootNode), '{"Jonas":[{"Sophie":[{"Nick":[{"Pete":[]},{"Barbara":[]}]}]}]}');
+    }
+
 }
