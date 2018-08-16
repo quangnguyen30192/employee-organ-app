@@ -79,7 +79,7 @@ class EmployeeJsonDataProvider implements EmployeeDataProvider {
                 throw new InvalidArgumentException("Json file content should not contain nested multi-dimensional json");
             }
 
-            throw new InvalidArgumentException("Value: $value is not a string - for Key: $key");
+            throw new InvalidArgumentException("Value is not a string - for Key: $key");
         }
     }
 

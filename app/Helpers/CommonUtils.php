@@ -28,4 +28,28 @@ class CommonUtils {
 
         return false;
     }
+
+    /**
+     * Check that all elements in an array of strings are identical
+     *
+     * @return true if all elements in an array of strings are identical, false for otherwise or the array is not valid
+     */
+    public static function hasIdenticalElements($array) {
+        if ($array === null || !is_array($array) || count($array) == 0) {
+            return false;
+        }
+
+        if (count($array) == 1) {
+            return true;
+        }
+
+        $firstElement = array_pop($array);
+        foreach ($array as $element) {
+            if ($element !== $firstElement) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

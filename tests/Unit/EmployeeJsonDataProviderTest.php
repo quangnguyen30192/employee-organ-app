@@ -41,7 +41,7 @@ class EmployeeJsonDataProviderTest extends TestCase {
         $testString = '{ "Pete": "Nick", "Barbara": 1, "Nick": "Sophie", "Sophie": "Jonas" }';
 
         $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage('Value: 1 is not a string - for Key: Barbara');
+        $this->expectExceptionMessage('Value is not a string - for Key: Barbara');
         $this->employeeDataProvider->parseEmployeeData($testString);
     }
 

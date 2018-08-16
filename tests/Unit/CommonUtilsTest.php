@@ -109,4 +109,25 @@ class CommonUtilsTest extends TestCase {
 
         $this->assertSame(array_diff($expected, $actual), []);
     }
+
+    public function testHasIdenticalElements() {
+        $actual = CommonUtils::hasIdenticalElements(['a', 'a', 'a', 'a']);
+        $this->assertTrue($actual);
+    }
+
+    public function testHasIdenticalElementsNull() {
+        $actual = CommonUtils::hasIdenticalElements(['a', null, 'a', 'a']);
+        $this->assertFalse($actual);
+    }
+
+    public function testHasIdenticalElementszzz() {
+        $actual = CommonUtils::hasIdenticalElements([null, 'a', 'a', 'a']);
+        $this->assertFalse($actual);
+    }
+
+    public function testHasIdenticalElementssss() {
+        $actual = CommonUtils::hasIdenticalElements([]);
+        $this->assertFalse($actual);
+    }
+
 }

@@ -15,31 +15,34 @@ interface EmployeeTreeService {
 
     /**
      * Find the boss on the top and the employee hierarchy
+     * The boss is the employee who has no supervisor
      *
-     * @param $employeeData an array of EmployeeSupervisorDto
+     * @param $employeeDtos an array of EmployeeSupervisorDto
      *
      * @return name of the boss
+     *
+     * @throws InvalidArgumentException if there is more than one boss found
      */
-    public function findBoss($employeeData);
+    public function findBoss($employeeDtos);
 
     /**
      * Find the subordinate employees of the input supervisor/employee
      *
      * @param supervisor/employee name
-     * @param $employeeData an array of EmployeeSupervisorDto
+     * @param $employeeDtos an array of EmployeeSupervisorDto
      *
      * @return an array of employee name
      */
-    public function findEmployeesUnderSupervisor($supervisor, $employeeData);
+    public function findEmployeesUnderSupervisor($supervisor, $employeeDtos);
 
     /**
      * Build a employee hierarchy tree based on input employee node
      * The input employee node would have hierarchy after processed
      *
      * @param $employeeNode employee node that should exist in the employee hierarchy tree
-     * @param $employeeData an array of EmployeeSupervisorDto
+     * @param $employeeDtos an array of EmployeeSupervisorDto
      *
      * @return void
      */
-    public function buildTree($employeeNode, $employeeData);
+    public function buildTree($employeeNode, $employeeDtos);
 }
