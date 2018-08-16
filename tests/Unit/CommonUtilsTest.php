@@ -49,7 +49,7 @@ class CommonUtilsTest extends TestCase {
             "Sophie" => "Jonas",
         ];
 
-        $this->assertSame(json_encode($expected), json_encode($actual));
+        $this->assertSame(array_diff($expected, $actual), []);
     }
 
     public function testIsValidJsonEmpty() {
@@ -96,7 +96,7 @@ class CommonUtilsTest extends TestCase {
             "Barbara" => null
         ];
 
-        $this->assertSame(json_encode($expected), json_encode($actual));
+        $this->assertSame(array_diff($expected, $actual), []);
     }
 
     public function testIsValidJsonWithUtf8() {
@@ -107,6 +107,6 @@ class CommonUtilsTest extends TestCase {
             "База данни грешка" => "База данни грешка test"
         ];
 
-        $this->assertSame(json_encode($expected, JSON_UNESCAPED_UNICODE), json_encode($actual, JSON_UNESCAPED_UNICODE));
+        $this->assertSame(array_diff($expected, $actual), []);
     }
 }

@@ -98,4 +98,11 @@ class EmployeeJsonDataProviderTest extends TestCase {
         $this->employeeDataProvider->parseEmployeeData($testString);
     }
 
+    public function testEmptyJson() {
+        $testString = '{}';
+
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Json string input is not valid');
+        $this->employeeDataProvider->parseEmployeeData($testString);
+    }
 }

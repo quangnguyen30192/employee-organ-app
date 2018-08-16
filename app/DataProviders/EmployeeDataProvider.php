@@ -18,9 +18,9 @@ interface EmployeeDataProvider {
      *
      * @param $data input source
      *
-     * @return an array of EmployeeSupervisorDtos
+     * @return an array of dtos
      *
-     * @return mixed
+     * @throws InvalidArgumentException if any errors
      */
     public function parseEmployeeData($data);
 }
