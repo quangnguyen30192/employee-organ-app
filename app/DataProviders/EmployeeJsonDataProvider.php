@@ -8,7 +8,7 @@
 
 namespace App\DataProviders;
 
-use App\EmployeeSupervisorDto;
+use App\EmployeeDto;
 use App\Helpers\CommonUtils;
 use InvalidArgumentException;
 use RecursiveArrayIterator;
@@ -35,7 +35,7 @@ class EmployeeJsonDataProvider implements EmployeeDataProvider {
      *
      * @param $jsonString json string input
      *
-     * @return an array of EmployeeSupervisorDtos
+     * @return an array of EmployeeDtos
      *
      * @throws InvalidArgumentException if the json string input is invalid or if the json has duplicate keys
      */
@@ -55,14 +55,14 @@ class EmployeeJsonDataProvider implements EmployeeDataProvider {
 
         $jsonIterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($json), RecursiveIteratorIterator::SELF_FIRST);
 
-        $employeeSupervisors = [];
+        $employeeDtos = [];
         foreach ($jsonIterator as $key => $value) {
             $this->validateValue($key, $value);
 
-            $employeeSupervisors[] = new EmployeeSupervisorDto($key, $value);
+            $employeeDtos[] = new EmployeeDto($key, $value);
         }
 
-        return $employeeSupervisors;
+        return $employeeDtos;
     }
 
     /**

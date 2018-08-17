@@ -17,7 +17,7 @@ interface EmployeeTreeService {
      * Find the boss on the top and the employee hierarchy
      * The boss is the employee who has no supervisors
      *
-     * @param $employeeDtos an array of EmployeeSupervisorDto
+     * @param $employeeDtos an array of EmployeeDto
      *
      * @return name of the boss
      *
@@ -29,7 +29,7 @@ interface EmployeeTreeService {
      * Find the subordinate employees of the input supervisor/employee
      *
      * @param supervisor/employee name
-     * @param $employeeDtos an array of EmployeeSupervisorDto
+     * @param $employeeDtos an array of EmployeeDto
      *
      * @return an array of employee name
      */

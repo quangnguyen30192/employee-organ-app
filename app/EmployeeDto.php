@@ -13,7 +13,7 @@ namespace App;
  * Data transfer object class that represents for each pair key (as employee) and value (as supervisor)
  * that was parsed from the content of json file input
  */
-class EmployeeSupervisorDto {
+class EmployeeDto {
 
     private $employee;
     private $supervisor;
@@ -39,6 +39,8 @@ class EmployeeSupervisorDto {
 
     /**
      * Override to enable array_diff works
+     * Since employee is unique then this function would return unique string
+     *
      * @return string
      */
     public function __toString() {

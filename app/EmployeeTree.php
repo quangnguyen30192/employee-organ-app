@@ -40,7 +40,7 @@ class EmployeeTree implements JsonSerializable {
      * The input employee node would have hierarchy after processed
      *
      * @param $employeeNode employee node that should exist in the employee hierarchy tree
-     * @param $employeeDtos an array of EmployeeSupervisorDto
+     * @param $employeeDtos an array of EmployeeDto
      *
      * @return void
      */

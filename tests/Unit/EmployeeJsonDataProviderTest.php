@@ -9,7 +9,7 @@
 namespace Tests\Unit;
 
 use App\DataProviders\EmployeeJsonDataProvider;
-use App\EmployeeSupervisorDto;
+use App\EmployeeDto;
 use PHPUnit\Framework\TestCase;
 
 class EmployeeJsonDataProviderTest extends TestCase {
@@ -28,10 +28,10 @@ class EmployeeJsonDataProviderTest extends TestCase {
         $this->assertSame(count($actual), 4);
 
         $expected = [
-            new EmployeeSupervisorDto("Pete", "Nick"),
-            new EmployeeSupervisorDto("Barbara", "Nick"),
-            new EmployeeSupervisorDto("Nick", "Sophie"),
-            new EmployeeSupervisorDto("Sophie", "Jonas")
+            new EmployeeDto("Pete", "Nick"),
+            new EmployeeDto("Barbara", "Nick"),
+            new EmployeeDto("Nick", "Sophie"),
+            new EmployeeDto("Sophie", "Jonas")
         ];
 
         $this->assertSame(array_diff($expected, $actual), []);
@@ -84,7 +84,7 @@ class EmployeeJsonDataProviderTest extends TestCase {
         $actual = $this->employeeDataProvider->parseEmployeeData($testString);
 
         $expected = [
-            new EmployeeSupervisorDto("База данни грешка", "База данни грешка test")
+            new EmployeeDto("База данни грешка", "База данни грешка test")
         ];
 
         $this->assertSame(array_diff($expected, $actual), []);
