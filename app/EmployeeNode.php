@@ -16,8 +16,8 @@ use JsonSerializable;
  */
 class EmployeeNode implements JsonSerializable {
 
-    private $employeeName;
-    private $subordinates;
+    protected $employeeName;
+    protected $subordinates;
 
     public function __construct($employeeName) {
         $this->employeeName = $employeeName;

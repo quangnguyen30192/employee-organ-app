@@ -6,3 +6,6 @@
  */
 
 require('./bootstrap');
+
+// implement Organization Chart (from https://github.com/dabeng/OrgChart) to represent employee json result
+require('orgchart');
