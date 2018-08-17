@@ -25,22 +25,41 @@
                 <label for="file">Json File :</label>
                 <input type="file" class="form-control" id="upload-file" name="file" required>
             </div>
+
+            @if (count($dataViewTypes))
+                <div class="form-group">
+                    <select class="form-control" name="dataViewType">
+                            @foreach($dataViewTypes as $dataViewType)
+                                <option value="{{$dataViewType}}">View by {{ $dataViewType }}</option>
+                            @endforeach
+                    </select>
+                </div>
+            @endif
+
             <button type="submit" class="btn btn-default btn-primary">Submit</button>
             {{ csrf_field() }}
         </form>
     </div>
 
     <div class="container">
-        <div class="form-group collapse" id="jsonViewBefore">
-            <h4>Preview</h4>
-            <textarea name="fileContent"></textarea>
-            <div class="alert alert-danger collapse" id="errorMessage"></div>
+
+        <div class="col-md-6">
+            <div class="form-group collapse" id="contentPreview">
+                <h1>Preview</h1>
+                <textarea name="fileContent"></textarea>
+                <div class="alert alert-danger collapse" id="errorMessage"></div>
+            </div>
         </div>
 
+        <div class="col-md-6">
+            <div class="form-group collapse" id="jsonView">
+                <h1>Json Result</h1>
+                <textarea></textarea>
+            </div>
 
-        <div class="form-group collapse" id="jsonViewAfter">
-            <h4>Result</h4>
-            <textarea></textarea>
+            <div class="form-group collapse" id="chart-container">
+                <h1>Employee Chart</h1>
+            </div>
         </div>
     </div>
 @endsection
@@ -55,10 +74,11 @@
                 reader.readAsText(file);
                 reader.onload = function (e) {
                     $('#errorMessage').hide();
-                    $('#jsonViewAfter').hide();
+                    $('#jsonView').hide();
+                    $('#chart-container').hide();
 
-                    $('#jsonViewBefore > textarea').text(e.target.result);
-                    $('#jsonViewBefore').show();
+                    $('#contentPreview > textarea').text(e.target.result);
+                    $('#contentPreview').show();
                 };
             });
 
@@ -73,13 +93,12 @@
                     processData: false,
                     beforeSend: function () {
                     },
-                    success: function (result) {
-                        if (result.status === 'success') {
-                            $('#jsonViewAfter').show();
-                            $('#jsonViewAfter > textarea').text(JSON.stringify(result.data, undefined, 4));
-                        } else if (result.status === 'error') {
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            showDataOnSuccess(response.result);
+                        } else if (response.status === 'error') {
+                            $('#errorMessage').text(response.message);
                             $('#errorMessage').show();
-                            $('#errorMessage').text(result.message);
                         }
                     },
                     error: function (err) {
@@ -88,6 +107,32 @@
                     }
                 });
             }));
+
+            function showDataOnSuccess(result) {
+                if (result.dataViewType === 'chart') {
+                    createEmployeeChart(JSON.parse(result.data));
+
+                    $('#jsonView').hide();
+                    $('#jsonView > textarea').text('');
+                    $('#chart-container').show();
+                } else {
+                    $('#chart-container').hide();
+                    $('#jsonView > textarea').text(result.data);
+                    $('#jsonView').show();
+                }
+
+            }
+
+            var employeeChart;
+            function createEmployeeChart(employeeData) {
+                if (employeeChart) {
+                    employeeChart.init({'data' : employeeData});
+                } else {
+                    employeeChart = $('#chart-container').orgchart({
+                        'data': employeeData
+                    });
+                }
+            }
         });
     </script>
 @endsection
