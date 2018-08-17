@@ -9,12 +9,6 @@
 namespace App\Helpers;
 
 
-use App\EmployeeChart;
-use App\EmployeeChartNode;
-use App\EmployeeNode;
-use App\EmployeeTree;
-use App\Services\EmployeeTreeService;
-
 class CommonUtils {
 
     /**
@@ -69,7 +63,7 @@ class CommonUtils {
     /**
      * Create successful data response using in Controller
      *
-     * @param $dataViewType
+     * @param $dataViewType json or chart
      * @param $employeeTree
      *
      * @return array represents successful data response
@@ -101,29 +95,5 @@ class CommonUtils {
             ],
             'message' => $errorMessage
         ];
-    }
-
-    /**
-     * Factory method to create EmployeeTree
-     *
-     * @param $isChartView
-     * @param $employeeRootNode
-     *
-     * @return EmployeeChart|EmployeeTree
-     */
-    public static function createEmployeeTree($isChartView, $employeeRootNode, EmployeeTreeService $employeeTreeService) {
-        return $isChartView ? new EmployeeChart($employeeRootNode, $employeeTreeService) : new EmployeeTree($employeeRootNode, $employeeTreeService);
-    }
-
-    /**
-     * Factory method to create EmployeeNode
-     *
-     * @param $isChartView
-     * @param $employeeName
-     *
-     * @return EmployeeChartNode|EmployeeNode
-     */
-    public static function createEmployeeNode($isChartView, $employeeName) {
-        return $isChartView ? new EmployeeChartNode($employeeName) : new EmployeeNode($employeeName);
     }
 }
