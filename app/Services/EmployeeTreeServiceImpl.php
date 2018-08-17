@@ -8,7 +8,6 @@
 
 namespace App\Services;
 
-use App\EmployeeNode;
 use App\Helpers\CommonUtils;
 use InvalidArgumentException;
 
@@ -89,15 +88,5 @@ class EmployeeTreeServiceImpl implements EmployeeTreeService {
         })->map(function ($data) {
             return $data->getEmployee();
         })->toArray();
-    }
-
-    public function buildTree($employeeNode, $employeeDtos) {
-        $subordinates = $this->findEmployeesUnderSupervisor($employeeNode->getEmployeeName(), $employeeDtos);
-
-        foreach ($subordinates as $subordinate) {
-            $subEmpNode = new EmployeeNode($subordinate);
-            $employeeNode->addSubordinate($subEmpNode);
-            $this->buildTree($subEmpNode, $employeeDtos);
-        }
     }
 }

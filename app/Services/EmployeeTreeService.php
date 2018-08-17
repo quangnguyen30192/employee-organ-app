@@ -34,15 +34,4 @@ interface EmployeeTreeService {
      * @return an array of employee name
      */
     public function findEmployeesUnderSupervisor($supervisor, $employeeDtos);
-
-    /**
-     * Build a employee hierarchy tree based on input employee node
-     * The input employee node would have hierarchy after processed
-     *
-     * @param $employeeNode employee node that should exist in the employee hierarchy tree
-     * @param $employeeDtos an array of EmployeeSupervisorDto
-     *
-     * @return void
-     */
-    public function buildTree($employeeNode, $employeeDtos);
 }

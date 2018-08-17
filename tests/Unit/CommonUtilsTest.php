@@ -19,20 +19,7 @@ use Tests\TestCase;
 class CommonUtilsTest extends TestCase {
 
     public function testIsValidJsonWithNonsenseValues() {
-        $values = [
-            false,
-            true,
-            null,
-            'abc',
-            '23',
-            23,
-            '23.5',
-            23.5,
-            '',
-            ' ',
-            '0',
-            0
-        ];
+        $values = [false, true, null, 'abc', '23', 23, '23.5', 23.5, '', ' ', '0', 0];
         foreach ($values as $value) {
             $this->assertFalse(CommonUtils::isValidJson($value));
         }
@@ -120,12 +107,7 @@ class CommonUtilsTest extends TestCase {
         $this->assertFalse($actual);
     }
 
-    public function testHasIdenticalElementszzz() {
-        $actual = CommonUtils::hasIdenticalElements([null, 'a', 'a', 'a']);
-        $this->assertFalse($actual);
-    }
-
-    public function testHasIdenticalElementssss() {
+    public function testHasIdenticalElementWithEmptyArrayInput() {
         $actual = CommonUtils::hasIdenticalElements([]);
         $this->assertFalse($actual);
     }

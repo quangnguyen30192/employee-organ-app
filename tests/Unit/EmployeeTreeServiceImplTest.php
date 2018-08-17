@@ -9,7 +9,6 @@
 namespace Tests\Unit;
 
 use App\DataProviders\EmployeeJsonDataProvider;
-use App\EmployeeNode;
 use App\Services\EmployeeTreeServiceImpl;
 use PHPUnit\Framework\TestCase;
 
@@ -94,16 +93,4 @@ class EmployeeTreeServiceImplTest extends TestCase {
 
         $this->assertSame(array_diff($actual, $expected), []);
     }
-
-    public function testBuildTree() {
-        $testString = '{ "Pete": "Nick", "Barbara": "Nick", "Nick": "Sophie", "Sophie": "Jonas" }';
-        $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
-
-        $boss = $this->employeeTreeService->findBoss($employeeData);
-        $rootNode = new EmployeeNode($boss);
-        $this->employeeTreeService->buildTree($rootNode, $employeeData);
-
-        $this->assertSame(json_encode($rootNode), '{"Jonas":[{"Sophie":[{"Nick":[{"Pete":[]},{"Barbara":[]}]}]}]}');
-    }
-
 }
