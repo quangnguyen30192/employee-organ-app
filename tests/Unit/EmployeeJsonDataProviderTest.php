@@ -34,7 +34,7 @@ class EmployeeJsonDataProviderTest extends TestCase {
             new EmployeeDto("Sophie", "Jonas")
         ];
 
-        $this->assertSame(array_diff($expected, $actual), []);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testParseJsonShouldOnlyHaveValueAsString() {
@@ -87,7 +87,7 @@ class EmployeeJsonDataProviderTest extends TestCase {
             new EmployeeDto("База данни грешка", "База данни грешка test")
         ];
 
-        $this->assertSame(array_diff($expected, $actual), []);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testJsonShouldNotHaveDuplicateEmployeeName() {

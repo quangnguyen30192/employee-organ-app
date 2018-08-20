@@ -36,14 +36,4 @@ class EmployeeDto {
     public function getSupervisor() {
         return $this->supervisor;
     }
-
-    /**
-     * Override to enable array_diff works
-     * Since employee is unique then this function would return unique string
-     *
-     * @return string
-     */
-    public function __toString() {
-        return $this->employee . $this->supervisor;
-    }
 }

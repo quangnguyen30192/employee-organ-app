@@ -81,7 +81,7 @@ class EmployeeTreeServiceImplTest extends TestCase {
         $actual = $this->employeeTreeService->findEmployeesUnderSupervisor("Tina",$employeeData);
         $expected = ["Pete", "Barbara"];
 
-        $this->assertSame(array_diff($actual, $expected), []);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testFindEmployeeUnderSupervisorDeepHierarchy() {
@@ -91,6 +91,6 @@ class EmployeeTreeServiceImplTest extends TestCase {
         $actual = $this->employeeTreeService->findEmployeesUnderSupervisor("Tina", $employeeData);
         $expected = ["Pete", "Barbara"];
 
-        $this->assertSame(array_diff($actual, $expected), []);
+        $this->assertEquals($expected, $actual);
     }
 }

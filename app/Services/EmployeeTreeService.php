@@ -105,6 +105,6 @@ class EmployeeTreeService {
             return $employeeDto->getSupervisor() === $supervisor;
         })->map(function ($employeeDto) {
             return $employeeDto->getEmployee();
-        })->toArray();
+        })->values()->toArray();
     }
 }

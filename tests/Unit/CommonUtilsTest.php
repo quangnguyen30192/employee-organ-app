@@ -36,14 +36,14 @@ class CommonUtilsTest extends TestCase {
             "Sophie" => "Jonas",
         ];
 
-        $this->assertSame(array_diff($expected, $actual), []);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testIsValidJsonEmpty() {
         $testString = '{}';
         $actual = CommonUtils::isValidJson($testString);
 
-        $this->assertSame(json_encode([]), json_encode($actual));
+        $this->assertEquals([], $actual);
     }
 
     public function testIsValidJsonShouldNotHaveInvalidSyntaxNoQuotesForKey() {
@@ -83,7 +83,7 @@ class CommonUtilsTest extends TestCase {
             "Barbara" => null
         ];
 
-        $this->assertSame(array_diff($expected, $actual), []);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testIsValidJsonWithUtf8() {
@@ -94,7 +94,7 @@ class CommonUtilsTest extends TestCase {
             "База данни грешка" => "База данни грешка test"
         ];
 
-        $this->assertSame(array_diff($expected, $actual), []);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testHasIdenticalElements() {
