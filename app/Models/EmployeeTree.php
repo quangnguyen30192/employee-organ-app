@@ -6,8 +6,7 @@
  * Time: 12:10 PM
  */
 
-namespace App;
-
+namespace App\Models;
 
 use App\Services\EmployeeTreeService;
 use JsonSerializable;

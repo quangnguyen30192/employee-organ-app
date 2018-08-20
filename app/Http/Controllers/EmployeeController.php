@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataProviders\EmployeeDataProvider;
-use App\EmployeeTreeFactory;
+use App\Factories\EmployeeTreeFactory;
 use App\Helpers\CommonUtils;
 use App\Services\EmployeeTreeService;
 use Illuminate\Http\Request;

@@ -6,7 +6,7 @@
  * Time: 2:36 PM
  */
 
-namespace App;
+namespace App\Models;
 
 
 use JsonSerializable;

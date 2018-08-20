@@ -6,7 +6,7 @@
  * Time: 3:23 PM
  */
 
-namespace App;
+namespace App\Models;
 
 
 /**

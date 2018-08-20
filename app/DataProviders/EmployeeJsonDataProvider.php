@@ -8,7 +8,7 @@
 
 namespace App\DataProviders;
 
-use App\EmployeeDto;
+use App\Models\EmployeeDto;
 use App\Helpers\CommonUtils;
 use InvalidArgumentException;
 use RecursiveArrayIterator;

@@ -6,8 +6,12 @@
  * Time: 2:41 AM
  */
 
-namespace App;
+namespace App\Factories;
 
+use App\Models\EmployeeChart;
+use App\Models\EmployeeChartNode;
+use App\Models\EmployeeNode;
+use App\Models\EmployeeTree;
 use Illuminate\Container\Container;
 
 /**

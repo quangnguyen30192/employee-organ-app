@@ -10,8 +10,8 @@ namespace Tests\Unit;
 
 
 use App\DataProviders\EmployeeJsonDataProvider;
-use App\EmployeeNode;
-use App\EmployeeTree;
+use App\Models\EmployeeNode;
+use App\Models\EmployeeTree;
 use App\Services\EmployeeTreeServiceImpl;
 use Tests\TestCase;
 

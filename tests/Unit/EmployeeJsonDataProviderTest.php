@@ -9,7 +9,7 @@
 namespace Tests\Unit;
 
 use App\DataProviders\EmployeeJsonDataProvider;
-use App\EmployeeDto;
+use App\Models\EmployeeDto;
 use PHPUnit\Framework\TestCase;
 
 class EmployeeJsonDataProviderTest extends TestCase {
