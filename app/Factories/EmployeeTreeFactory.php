@@ -31,7 +31,7 @@ class EmployeeTreeFactory {
      *
      * @return EmployeeTree
      */
-    public static function createTree($dataViewType, $employeeName) {
+    public static function createTree(string $dataViewType, string $employeeName): EmployeeTree {
         if ($dataViewType === "json") {
             return self::createEmployeeTree($employeeName);
         }
@@ -47,13 +47,13 @@ class EmployeeTreeFactory {
      *
      * @return EmployeeTree
      */
-    private static function createEmployeeTree($employeeName) {
+    private static function createEmployeeTree(string $employeeName): EmployeeTree {
         return Container::getInstance()->make(EmployeeTree::class, [
             'employeeRootNode' => new EmployeeNode($employeeName)
         ]);
     }
 
-    private static function createEmployeeChart($employeeName) {
+    private static function createEmployeeChart(string $employeeName): EmployeeTree {
         return Container::getInstance()->make(EmployeeChart::class, [
             'employeeRootNode' => new EmployeeChartNode($employeeName)
         ]);

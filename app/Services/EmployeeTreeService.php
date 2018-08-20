@@ -9,6 +9,8 @@
 namespace App\Services;
 
 use App\Helpers\CommonUtils;
+use App\Models\EmployeeDto;
+use Illuminate\Support\Collection;
 use InvalidArgumentException;
 
 /**
@@ -30,7 +32,7 @@ class EmployeeTreeService {
      *
      * @throws InvalidArgumentException if there is more than one boss found
      */
-    public function findBoss($employeeDtos) {
+    public function findBoss(array $employeeDtos): string {
         if ($employeeDtos === null || count($employeeDtos) == 0) {
             throw new InvalidArgumentException("There is no employee dtos provided");
         }
@@ -59,7 +61,7 @@ class EmployeeTreeService {
      *
      * @return supervisor of employeeDto if it's not empty, otherwise return employee.
      */
-    private function getValidBossName($employeeDto) {
+    private function getValidBossName(EmployeeDto $employeeDto): string {
         if ($employeeDto->getSupervisor() && trim($employeeDto->getSupervisor()) !== "") {
             return $employeeDto->getSupervisor();
         }
@@ -74,7 +76,7 @@ class EmployeeTreeService {
      *
      * @return name of the boss
      */
-    private function findBossName($bossDtos) {
+    private function findBossName(Collection $bossDtos): string {
         if (count($bossDtos) == 0) {
             // there definitely will be at least one boss, this case never happens
             throw new InvalidArgumentException("Boss not found - Definitely there is no any data in json file");
@@ -100,7 +102,7 @@ class EmployeeTreeService {
      *
      * @return array of employee names supervised by the input employee
      */
-    public function findEmployeesUnderSupervisor($supervisor, $employeeDtos): array {
+    public function findEmployeesUnderSupervisor(string $supervisor, array $employeeDtos): array {
         return collect($employeeDtos)->filter(function ($employeeDto) use ($supervisor) {
             return $employeeDto->getSupervisor() === $supervisor;
         })->map(function ($employeeDto) {

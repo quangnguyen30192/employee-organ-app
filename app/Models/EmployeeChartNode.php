@@ -14,7 +14,7 @@ namespace App\Models;
  */
 class EmployeeChartNode extends EmployeeNode {
 
-    public function __construct($employeeName) {
+    public function __construct(string $employeeName) {
         parent::__construct($employeeName);
     }
 

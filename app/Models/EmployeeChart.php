@@ -22,11 +22,11 @@ class EmployeeChart extends EmployeeTree {
      * @param $employeeTreeService implementation of EmployeeTreeService
      * @param $employeeRootNode employee root node of the employee tree
      */
-    public function __construct($employeeRootNode, EmployeeTreeService $employeeTreeService) {
+    public function __construct(EmployeeNode $employeeRootNode, EmployeeTreeService $employeeTreeService) {
         parent::__construct($employeeRootNode, $employeeTreeService);
     }
 
-    protected function newEmployeeNode($employeeName) {
+    protected function newEmployeeNode(string $employeeName): EmployeeNode {
         return new EmployeeChartNode($employeeName);
     }
 }

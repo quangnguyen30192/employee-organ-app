@@ -9,6 +9,8 @@
 namespace App\Helpers;
 
 
+use App\Models\EmployeeTree;
+
 class CommonUtils {
 
     /**
@@ -26,7 +28,7 @@ class CommonUtils {
      * @return false if the input json string is not valid, otherwise an associative array decoded from
      * json input will be returned
      */
-    public static function isValidJson($jsonString) {
+    public static function isValidJson(?string $jsonString) {
         if (is_string($jsonString) && trim($jsonString) !== '') {
             $array = json_decode($jsonString, true);
 
@@ -39,9 +41,11 @@ class CommonUtils {
     /**
      * Check that all elements in an array of strings are identical
      *
+     * @param $array array of strings
+     *
      * @return true if all elements in an array of strings are identical, false for otherwise or the array is not valid
      */
-    public static function hasIdenticalElements($array) {
+    public static function hasIdenticalElements(array $array): bool {
         if ($array === null || !is_array($array) || count($array) == 0) {
             return false;
         }
@@ -68,7 +72,7 @@ class CommonUtils {
      *
      * @return array represents successful data response
      */
-    public static function createsSuccessResponse($dataViewType, $employeeTree) {
+    public static function createsSuccessResponse(string $dataViewType, EmployeeTree $employeeTree): array {
         return [
             'status' => 'success',
             'result' => [
@@ -86,7 +90,7 @@ class CommonUtils {
      *
      * @return array represents error data response
      */
-    public static function createsErrorResponse($errorMessage) {
+    public static function createsErrorResponse(string $errorMessage): array {
         return [
             'status' => 'error',
             'result' => [

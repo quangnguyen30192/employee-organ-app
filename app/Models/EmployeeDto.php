@@ -24,16 +24,16 @@ class EmployeeDto {
      * @param $employee
      * @param $supervisor
      */
-    public function __construct($employee, $supervisor) {
+    public function __construct(string $employee, string $supervisor) {
         $this->employee = $employee;
         $this->supervisor = $supervisor;
     }
 
-    public function getEmployee() {
+    public function getEmployee(): string {
         return $this->employee;
     }
 
-    public function getSupervisor() {
+    public function getSupervisor(): string {
         return $this->supervisor;
     }
 }

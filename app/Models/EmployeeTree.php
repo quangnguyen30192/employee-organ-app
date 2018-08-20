@@ -25,7 +25,7 @@ class EmployeeTree implements JsonSerializable {
      * @param $employeeTreeService implementation of EmployeeTreeService
      * @param $employeeRootNode employee root node of the employee tree
      */
-    public function __construct($employeeRootNode, EmployeeTreeService $employeeTreeService) {
+    public function __construct(EmployeeNode $employeeRootNode, EmployeeTreeService $employeeTreeService) {
         $this->employeeRootNode = $employeeRootNode;
         $this->employeeTreeService = $employeeTreeService;
     }
@@ -35,7 +35,7 @@ class EmployeeTree implements JsonSerializable {
      *
      * @param $employeeDtos array of EmployeeDtos
      */
-    public function buildTreeOnRootNode($employeeDtos) {
+    public function buildTreeOnRootNode(array $employeeDtos): void {
         $this->buildTree($this->employeeRootNode, $employeeDtos);
     }
 
@@ -48,7 +48,7 @@ class EmployeeTree implements JsonSerializable {
      * @param $employeeNode employee node that should exist in the employee hierarchy tree
      * @param $employeeDtos array of EmployeeDtos
      */
-    private function buildTree($employeeNode, $employeeDtos) {
+    private function buildTree(EmployeeNode $employeeNode, array $employeeDtos): void {
         $subordinates = $this->employeeTreeService->findEmployeesUnderSupervisor($employeeNode->getEmployeeName(), $employeeDtos);
 
         foreach ($subordinates as $subordinate) {
@@ -58,7 +58,7 @@ class EmployeeTree implements JsonSerializable {
         }
     }
 
-    protected function newEmployeeNode($employeeName) {
+    protected function newEmployeeNode(string $employeeName): EmployeeNode {
         return new EmployeeNode($employeeName);
     }
 

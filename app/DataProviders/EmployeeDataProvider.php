@@ -39,7 +39,7 @@ class EmployeeDataProvider {
      *
      * @throws InvalidArgumentException if the json string input is invalid or if the json has duplicate keys
      */
-    public function parseEmployeeData($jsonString) {
+    public function parseEmployeeData(string $jsonString): array {
 
         $array = $this->validateJson($jsonString);
 
@@ -63,7 +63,7 @@ class EmployeeDataProvider {
      *
      * @param $value the value input
      */
-    private function validateKeyValue($key, $value) {
+    private function validateKeyValue(string $key, $value): void {
         if (!is_string($value)) {
             if (is_object($value) || is_array($value)) {
                 throw new InvalidArgumentException("Json file content should not contain nested multi-dimensional json");
@@ -88,7 +88,7 @@ class EmployeeDataProvider {
      *
      * @throws InvalidArgumentException if the json string is not valid or has key duplication
      */
-    private function validateJson($jsonString) {
+    private function validateJson(string $jsonString): array {
         $arr = CommonUtils::isValidJson($jsonString);
         if (!$arr) {
             throw new InvalidArgumentException("Json string input is not valid");
