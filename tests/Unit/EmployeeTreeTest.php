@@ -9,10 +9,10 @@
 namespace Tests\Unit;
 
 
-use App\DataProviders\EmployeeJsonDataProvider;
+use App\DataProviders\EmployeeDataProvider;
 use App\Models\EmployeeNode;
 use App\Models\EmployeeTree;
-use App\Services\EmployeeTreeServiceImpl;
+use App\Services\EmployeeTreeService;
 use Tests\TestCase;
 
 class EmployeeTreeTest extends TestCase {
@@ -21,8 +21,8 @@ class EmployeeTreeTest extends TestCase {
     private $employeeTreeService;
 
     public function setUp() {
-        $this->employeeDataProvider = new EmployeeJsonDataProvider();
-        $this->employeeTreeService = new EmployeeTreeServiceImpl();
+        $this->employeeDataProvider = new EmployeeDataProvider();
+        $this->employeeTreeService = new EmployeeTreeService();
     }
 
     public function testBuildTree() {

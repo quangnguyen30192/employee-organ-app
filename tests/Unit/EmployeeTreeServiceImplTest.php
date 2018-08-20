@@ -8,8 +8,8 @@
 
 namespace Tests\Unit;
 
-use App\DataProviders\EmployeeJsonDataProvider;
-use App\Services\EmployeeTreeServiceImpl;
+use App\DataProviders\EmployeeDataProvider;
+use App\Services\EmployeeTreeService;
 use PHPUnit\Framework\TestCase;
 
 class EmployeeTreeServiceImplTest extends TestCase {
@@ -18,8 +18,8 @@ class EmployeeTreeServiceImplTest extends TestCase {
     private $employeeTreeService;
 
     public function setUp() {
-        $this->employeeDataProvider = new EmployeeJsonDataProvider();
-        $this->employeeTreeService = new EmployeeTreeServiceImpl();
+        $this->employeeDataProvider = new EmployeeDataProvider();
+        $this->employeeTreeService = new EmployeeTreeService();
     }
 
     public function testFindBoss() {

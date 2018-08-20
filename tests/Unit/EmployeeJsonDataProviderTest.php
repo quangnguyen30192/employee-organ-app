@@ -8,7 +8,7 @@
 
 namespace Tests\Unit;
 
-use App\DataProviders\EmployeeJsonDataProvider;
+use App\DataProviders\EmployeeDataProvider;
 use App\Models\EmployeeDto;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +17,7 @@ class EmployeeJsonDataProviderTest extends TestCase {
     private $employeeDataProvider;
 
     public function setUp() {
-        $this->employeeDataProvider = new EmployeeJsonDataProvider();
+        $this->employeeDataProvider = new EmployeeDataProvider();
     }
 
     public function testParseJson() {
