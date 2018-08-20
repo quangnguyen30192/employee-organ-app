@@ -35,29 +35,19 @@ class EmployeeJsonDataProvider implements EmployeeDataProvider {
      *
      * @param $jsonString json string input
      *
-     * @return an array of EmployeeDtos
+     * @return array of EmployeeDtos
      *
      * @throws InvalidArgumentException if the json string input is invalid or if the json has duplicate keys
      */
     public function parseEmployeeData($jsonString) {
 
-        $json = CommonUtils::isValidJson($jsonString);
-        if (!$json) {
-            throw new InvalidArgumentException("Json string input is not valid");
-        }
+        $array = $this->validateJson($jsonString);
 
-        try {
-            $this->jsonParser->parse($jsonString, JsonParser::DETECT_KEY_CONFLICTS);
-        } catch (DuplicateKeyException $e) {
-            $details = $e->getDetails();
-            throw new InvalidArgumentException('Duplicate key \'' . $details['key'] . '\' at line ' . $details['line']);
-        }
-
-        $jsonIterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($json), RecursiveIteratorIterator::SELF_FIRST);
+        $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($array), RecursiveIteratorIterator::SELF_FIRST);
 
         $employeeDtos = [];
-        foreach ($jsonIterator as $key => $value) {
-            $this->validateValue($key, $value);
+        foreach ($iterator as $key => $value) {
+            $this->validateKeyValue($key, $value);
 
             $employeeDtos[] = new EmployeeDto($key, $value);
         }
@@ -66,14 +56,14 @@ class EmployeeJsonDataProvider implements EmployeeDataProvider {
     }
 
     /**
-     * Validate the input which is the value (supervisor) of each key (employee), the value should be a string
+     * Validate the input which is the pair of value (supervisor) and key (employee), the value should be a string
      *
-     * @throws InvalidArgumentException if the value is neither not string nor an object or array (consider there are
+     * @throws InvalidArgumentException if the value is neither string nor an object or array (consider there are
      * nested multi-dimensional in the json input)
      *
      * @param $value the value input
      */
-    protected function validateValue($key, $value) {
+    private function validateKeyValue($key, $value) {
         if (!is_string($value)) {
             if (is_object($value) || is_array($value)) {
                 throw new InvalidArgumentException("Json file content should not contain nested multi-dimensional json");
@@ -81,6 +71,38 @@ class EmployeeJsonDataProvider implements EmployeeDataProvider {
 
             throw new InvalidArgumentException("Value is not a string - for Key: $key");
         }
+
+        if ($key === $value) {
+            throw new InvalidArgumentException("Employee and supervisor have the same name: '$key''");
+        }
+    }
+
+    /**
+     * Validate the json string input has valid json form
+     *
+     * To check the key duplication, we're using: https://github.com/zaach/jsonlint
+     *
+     * @param $jsonString
+     *
+     * @return associative array decoded from the valid json
+     *
+     * @throws InvalidArgumentException if the json string is not valid or has key duplication
+     */
+    private function validateJson($jsonString) {
+        $arr = CommonUtils::isValidJson($jsonString);
+        if (!$arr) {
+            throw new InvalidArgumentException("Json string input is not valid");
+        }
+
+        try {
+            // check key duplication in json
+            $this->jsonParser->parse($jsonString, JsonParser::DETECT_KEY_CONFLICTS);
+        } catch (DuplicateKeyException $e) {
+            $details = $e->getDetails();
+            throw new InvalidArgumentException('Duplicate employee \'' . $details['key'] . '\' at line ' . $details['line']);
+        }
+
+        return $arr;
     }
 
 }

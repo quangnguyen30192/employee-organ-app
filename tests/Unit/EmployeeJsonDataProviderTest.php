@@ -94,7 +94,7 @@ class EmployeeJsonDataProviderTest extends TestCase {
         $testString = '{ "Pete": "Nick", "Pete": "Jame", "Nick": "Sophie", "Sophie": "Jonas" }';
 
         $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage('Duplicate key \'Pete\' at line 1');
+        $this->expectExceptionMessage('Duplicate employee \'Pete\' at line 1');
         $this->employeeDataProvider->parseEmployeeData($testString);
     }
 
@@ -105,4 +105,13 @@ class EmployeeJsonDataProviderTest extends TestCase {
         $this->expectExceptionMessage('Json string input is not valid');
         $this->employeeDataProvider->parseEmployeeData($testString);
     }
+
+    public function testJsonShouldNotHaveTheSameEmployeeSupervisor() {
+        $testString = '{ "Pete": "Pete", "Nick": "Sophie", "Sophie": "Jonas" }';
+
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Employee and supervisor have the same name: \'Pete\'');
+        $this->employeeDataProvider->parseEmployeeData($testString);
+    }
+
 }
