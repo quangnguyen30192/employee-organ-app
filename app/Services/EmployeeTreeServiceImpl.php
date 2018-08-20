@@ -83,10 +83,10 @@ class EmployeeTreeServiceImpl implements EmployeeTreeService {
     }
 
     public function findEmployeesUnderSupervisor($supervisor, $employeeDtos): array {
-        return collect($employeeDtos)->filter(function ($data) use ($supervisor) {
-            return $data->getSupervisor() === $supervisor;
-        })->map(function ($data) {
-            return $data->getEmployee();
+        return collect($employeeDtos)->filter(function ($employeeDto) use ($supervisor) {
+            return $employeeDto->getSupervisor() === $supervisor;
+        })->map(function ($employeeDto) {
+            return $employeeDto->getEmployee();
         })->toArray();
     }
 }

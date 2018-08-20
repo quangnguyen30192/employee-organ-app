@@ -16,11 +16,11 @@ interface EmployeeDataProvider {
     /**
      * Parse the data source input and convert them into an array of dto objects
      *
-     * @param $data input source
+     * @param $dataSource the input data source
      *
-     * @return an array of dtos
      *
+     * @return array of EmployeeDtos
      * @throws InvalidArgumentException if any errors
      */
-    public function parseEmployeeData($data);
+    public function parseEmployeeData($dataSource);
 }

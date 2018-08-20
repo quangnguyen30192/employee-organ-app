@@ -31,7 +31,7 @@ interface EmployeeTreeService {
      * @param supervisor/employee name
      * @param $employeeDtos an array of EmployeeDto
      *
-     * @return an array of employee name
+     * @return array of employee names supervised by the input employee
      */
     public function findEmployeesUnderSupervisor($supervisor, $employeeDtos);
 }

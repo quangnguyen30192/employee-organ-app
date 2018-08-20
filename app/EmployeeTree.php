@@ -31,18 +31,23 @@ class EmployeeTree implements JsonSerializable {
         $this->employeeTreeService = $employeeTreeService;
     }
 
+    /**
+     * Build a employee hierarchy tree based on the employee root node.
+     *
+     * @param $employeeDtos array of EmployeeDtos
+     */
     public function buildTreeOnRootNode($employeeDtos) {
         $this->buildTree($this->employeeRootNode, $employeeDtos);
     }
 
     /**
-     * Build a employee hierarchy tree based on input employee node
-     * The input employee node would have hierarchy after processed
+     * Build a employee hierarchy tree based on the input employee node by recursively
+     * expanding the subordinates under that node.
+     *
+     * The input employee node would have full hierarchy after processed
      *
      * @param $employeeNode employee node that should exist in the employee hierarchy tree
-     * @param $employeeDtos an array of EmployeeDto
-     *
-     * @return void
+     * @param $employeeDtos array of EmployeeDtos
      */
     protected function buildTree($employeeNode, $employeeDtos) {
         $subordinates = $this->employeeTreeService->findEmployeesUnderSupervisor($employeeNode->getEmployeeName(), $employeeDtos);

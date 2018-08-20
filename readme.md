@@ -10,3 +10,5 @@ composer run post-create-project-cmd
 npm install
 npm run dev
 ```
+
+Go to index page: select and upload the files in `test-files` folder and enjoy!
