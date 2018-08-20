@@ -9,13 +9,13 @@ use App\Services\EmployeeTreeService;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 
-class IndexController extends Controller {
+class EmployeeController extends Controller {
 
     private $employeeTreeService;
     private $employeeDataProvider;
 
     /**
-     * IndexController constructor.
+     * EmployeeController constructor.
      */
     public function __construct(EmployeeTreeService $employeeTreeService, EmployeeDataProvider $employeeDataProvider) {
         $this->employeeTreeService = $employeeTreeService;

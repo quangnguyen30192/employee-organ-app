@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', ['as' => 'index', 'uses' => 'IndexController@index']);
-Route::get('/upload', ['as' => 'upload.get', 'uses' => 'IndexController@index']);
-Route::post('/upload', ['as' => 'upload', 'uses' => 'IndexController@upload']);
+Route::get('/', ['as' => 'index', 'uses' => 'EmployeeController@index']);
+Route::get('/upload', ['as' => 'upload.get', 'uses' => 'EmployeeController@index']);
+Route::post('/upload', ['as' => 'upload', 'uses' => 'EmployeeController@upload']);
