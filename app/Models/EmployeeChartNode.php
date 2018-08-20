@@ -24,8 +24,8 @@ class EmployeeChartNode extends EmployeeNode {
      */
     public function jsonSerialize() {
         return [
-            'name' => $this->employeeName,
-            'children' => $this->subordinates
+            'name' => $this->getEmployeeName(),
+            'children' => $this->getSubordinates()
         ];
     }
 }

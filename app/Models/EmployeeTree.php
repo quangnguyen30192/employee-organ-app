@@ -16,8 +16,8 @@ use JsonSerializable;
  */
 class EmployeeTree implements JsonSerializable {
 
-    protected $employeeRootNode;
-    protected $employeeTreeService;
+    private $employeeRootNode;
+    private $employeeTreeService;
 
     /**
      * EmployeeTree constructor.
@@ -48,7 +48,7 @@ class EmployeeTree implements JsonSerializable {
      * @param $employeeNode employee node that should exist in the employee hierarchy tree
      * @param $employeeDtos array of EmployeeDtos
      */
-    protected function buildTree($employeeNode, $employeeDtos) {
+    private function buildTree($employeeNode, $employeeDtos) {
         $subordinates = $this->employeeTreeService->findEmployeesUnderSupervisor($employeeNode->getEmployeeName(), $employeeDtos);
 
         foreach ($subordinates as $subordinate) {
