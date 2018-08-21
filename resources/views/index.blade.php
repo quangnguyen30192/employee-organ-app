@@ -110,14 +110,14 @@
 
             function showDataOnSuccess(result) {
                 if (result.dataViewType === 'chart') {
-                    createEmployeeChart(JSON.parse(result.data));
+                    createEmployeeChart(result.data);
 
                     $('#jsonView').hide();
                     $('#jsonView > textarea').text('');
                     $('#chart-container').show();
                 } else {
                     $('#chart-container').hide();
-                    $('#jsonView > textarea').text(result.data);
+                    $('#jsonView > textarea').text(JSON.stringify(result.data, null, 4));
                     $('#jsonView').show();
                 }
 

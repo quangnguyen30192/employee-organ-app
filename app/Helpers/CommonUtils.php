@@ -77,7 +77,7 @@ class CommonUtils {
             'status' => 'success',
             'result' => [
                 'dataViewType' => $dataViewType,
-                'data' => json_encode($employeeTree, JSON_PRETTY_PRINT),
+                'data' => $employeeTree,
             ],
             'message' => 'Load data successfully'
         ];
