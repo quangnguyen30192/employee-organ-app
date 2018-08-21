@@ -46,4 +46,23 @@ class EmployeeController extends Controller {
             return response()->json(CommonUtils::createsErrorResponse($errorMessage));
         }
     }
+
+    public function employeeJsonApi(Request $request) {
+        $jsonData = $request->except('_token');
+
+        try {
+            $employeeDtos = $this->employeeDataProvider->parseEmployeeData($jsonData);
+            $boss = $this->employeeTreeService->findBoss($employeeDtos);
+
+            $employeeTree = EmployeeTreeFactory::createTree("json", $boss);
+            $employeeTree->buildTreeOnRootNode($employeeDtos);
+
+            return response()->json($employeeTree->jsonSerialize());
+        } catch (InvalidArgumentException $exception) {
+            $errorMessage = $exception->getMessage();
+
+            return response()->json(['error' => $errorMessage]);
+        }
+    }
+
 }

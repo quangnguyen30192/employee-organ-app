@@ -14,3 +14,5 @@
 Route::get('/', ['as' => 'index', 'uses' => 'EmployeeController@index']);
 Route::get('/upload', ['as' => 'upload.get', 'uses' => 'EmployeeController@index']);
 Route::post('/upload', ['as' => 'upload', 'uses' => 'EmployeeController@upload']);
+
+Route::post('/employeeJsonApi', ['as' => 'employeeJsonApi', 'uses' => 'EmployeeController@employeeJsonApi']);
