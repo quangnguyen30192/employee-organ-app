@@ -19,8 +19,8 @@ class EmployeeChart extends EmployeeTree {
     /**
      * EmployeeChart constructor.
      *
-     * @param $employeeTreeService implementation of EmployeeTreeService
-     * @param $employeeRootNode employee root node of the employee tree
+     * @param $employeeTreeService
+     * @param $employeeRootNode root node of the employee tree
      */
     public function __construct(EmployeeNode $employeeRootNode, EmployeeTreeService $employeeTreeService) {
         parent::__construct($employeeRootNode, $employeeTreeService);

@@ -33,10 +33,6 @@ class EmployeeTreeService {
      * @throws InvalidArgumentException if there is more than one boss found
      */
     public function findBoss(array $employeeDtos): string {
-        if ($employeeDtos === null || count($employeeDtos) == 0) {
-            throw new InvalidArgumentException("There is no employee dtos provided");
-        }
-
         if (count($employeeDtos) == 1) {
             return $this->getValidBossName($employeeDtos[0]);
         }
@@ -45,6 +41,7 @@ class EmployeeTreeService {
             return $employeeDto->getEmployee();
         })->toArray();
 
+        // find the bosses who are the employees and have no supervisor
         $bossDtos = collect($employeeDtos)->filter(function ($employeeDto) use ($employees) {
             $supervisor = $employeeDto->getSupervisor();
 
@@ -62,11 +59,7 @@ class EmployeeTreeService {
      * @return supervisor of employeeDto if it's not empty, otherwise return employee.
      */
     private function getValidBossName(EmployeeDto $employeeDto): string {
-        if ($employeeDto->getSupervisor() && trim($employeeDto->getSupervisor()) !== "") {
-            return $employeeDto->getSupervisor();
-        }
-
-        return $employeeDto->getEmployee();
+        return trim($employeeDto->getSupervisor()) !== "" ? $employeeDto->getSupervisor() : $employeeDto->getEmployee();
     }
 
     /**

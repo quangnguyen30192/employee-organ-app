@@ -66,6 +66,15 @@ class EmployeeTreeServiceImplTest extends TestCase {
         $this->employeeTreeService->findBoss($employeeData);
     }
 
+    public function testFindBossWithBlankValue() {
+        $testString = '{ "Pete": "    ", "Barbara": "Tina" }';
+        $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
+
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('There is more than one top boss: Pete, Tina');
+        $this->employeeTreeService->findBoss($employeeData);
+    }
+
     public function testFindBossHavingManySubordinates() {
         $testString = '{ "Pete": "Tina", "Barbara": "Tina", "Minh" : "Tina", "Sang": "Tina" }';
         $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);

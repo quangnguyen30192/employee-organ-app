@@ -8,11 +8,9 @@
 
 namespace App\DataProviders;
 
-use App\Models\EmployeeDto;
 use App\Helpers\CommonUtils;
+use App\Models\EmployeeDto;
 use InvalidArgumentException;
-use RecursiveArrayIterator;
-use RecursiveIteratorIterator;
 use Seld\JsonLint\DuplicateKeyException;
 use Seld\JsonLint\JsonParser;
 
@@ -33,20 +31,17 @@ class EmployeeDataProvider {
     /**
      * Parse the json string input and convert them into an array of dto objects
      *
-     * @param $jsonString json string input
+     * @param $json json string input
      *
      * @return array of EmployeeDtos
      *
      * @throws InvalidArgumentException if the json string input is invalid or if the json has duplicate keys
      */
-    public function parseEmployeeData(string $jsonString): array {
-
-        $array = $this->validateJson($jsonString);
-
-        $iterator = new RecursiveIteratorIterator(new RecursiveArrayIterator($array), RecursiveIteratorIterator::SELF_FIRST);
+    public function parseEmployeeData($data): array {
+        $array = is_string($data) ? $this->validateJson($data) : $data;
 
         $employeeDtos = [];
-        foreach ($iterator as $key => $value) {
+        foreach ($array as $key => $value) {
             $this->validateKeyValue($key, $value);
 
             $employeeDtos[] = new EmployeeDto($key, $value);
@@ -61,7 +56,8 @@ class EmployeeDataProvider {
      * @throws InvalidArgumentException if the value is neither string nor an object or array (consider there are
      * nested multi-dimensional in the json input)
      *
-     * @param $value the value input
+     * @param $key
+     * @param $value
      */
     private function validateKeyValue(string $key, $value): void {
         if (!is_string($value)) {
@@ -82,21 +78,21 @@ class EmployeeDataProvider {
      *
      * To check the key duplication, we're using: https://github.com/zaach/jsonlint
      *
-     * @param $jsonString
+     * @param $json
      *
      * @return associative array decoded from the valid json
      *
      * @throws InvalidArgumentException if the json string is not valid or has key duplication
      */
-    private function validateJson(string $jsonString): array {
-        $arr = CommonUtils::isValidJson($jsonString);
+    private function validateJson(string $json): array {
+        $arr = CommonUtils::isValidJson($json);
         if (!$arr) {
             throw new InvalidArgumentException("Json string input is not valid");
         }
 
         try {
             // check key duplication in json
-            $this->jsonParser->parse($jsonString, JsonParser::DETECT_KEY_CONFLICTS);
+            $this->jsonParser->parse($json, JsonParser::DETECT_KEY_CONFLICTS);
         } catch (DuplicateKeyException $e) {
             $details = $e->getDetails();
             throw new InvalidArgumentException('Duplicate employee \'' . $details['key'] . '\' at line ' . $details['line']);

@@ -23,19 +23,15 @@ class CommonUtils {
     /**
      * Check the json input is valid
      *
-     * @param $jsonString json string input
+     * @param $json json string input
      *
      * @return false if the input json string is not valid, otherwise an associative array decoded from
      * json input will be returned
      */
-    public static function isValidJson(?string $jsonString) {
-        if (is_string($jsonString) && trim($jsonString) !== '') {
-            $array = json_decode($jsonString, true);
+    public static function isValidJson(string $json) {
+        $array = json_decode($json, true);
 
-            return json_last_error() === JSON_ERROR_NONE && is_array($array) ? $array : false;
-        }
-
-        return false;
+        return json_last_error() === JSON_ERROR_NONE && is_array($array) ? $array : false;
     }
 
     /**
@@ -46,12 +42,8 @@ class CommonUtils {
      * @return true if all elements in an array of strings are identical, false for otherwise or the array is not valid
      */
     public static function hasIdenticalElements(array $array): bool {
-        if ($array === null || !is_array($array) || count($array) == 0) {
+        if (count($array) == 0) {
             return false;
-        }
-
-        if (count($array) == 1) {
-            return true;
         }
 
         $firstElement = array_pop($array);

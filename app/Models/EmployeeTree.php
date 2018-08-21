@@ -22,8 +22,8 @@ class EmployeeTree implements JsonSerializable {
     /**
      * EmployeeTree constructor.
      *
-     * @param $employeeTreeService implementation of EmployeeTreeService
-     * @param $employeeRootNode employee root node of the employee tree
+     * @param $employeeTreeService
+     * @param $employeeRootNode root node of the employee tree
      */
     public function __construct(EmployeeNode $employeeRootNode, EmployeeTreeService $employeeTreeService) {
         $this->employeeRootNode = $employeeRootNode;
