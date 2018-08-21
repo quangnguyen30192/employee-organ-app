@@ -6,7 +6,7 @@
  * Time: 11:05 PM
  */
 
-namespace App\DataProviders;
+namespace App\Services;
 
 use App\Helpers\CommonUtils;
 use App\Models\EmployeeDto;
@@ -31,7 +31,7 @@ class EmployeeDataProvider {
     /**
      * Parse the json string input and convert them into an array of dto objects
      *
-     * @param $json json string input
+     * @param $data json string input or array
      *
      * @return array of EmployeeDtos
      *

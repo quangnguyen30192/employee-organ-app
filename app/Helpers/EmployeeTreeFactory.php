@@ -6,7 +6,7 @@
  * Time: 2:41 AM
  */
 
-namespace App\Factories;
+namespace App\Helpers;
 
 use App\Models\EmployeeChart;
 use App\Models\EmployeeChartNode;

@@ -9,9 +9,9 @@
 namespace Tests\Unit;
 
 
-use App\DataProviders\EmployeeDataProvider;
 use App\Models\EmployeeNode;
 use App\Models\EmployeeTree;
+use App\Services\EmployeeDataProvider;
 use App\Services\EmployeeTreeService;
 use Tests\TestCase;
 

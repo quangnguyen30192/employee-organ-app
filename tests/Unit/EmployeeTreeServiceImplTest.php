@@ -8,7 +8,7 @@
 
 namespace Tests\Unit;
 
-use App\DataProviders\EmployeeDataProvider;
+use App\Services\EmployeeDataProvider;
 use App\Services\EmployeeTreeService;
 use PHPUnit\Framework\TestCase;
 

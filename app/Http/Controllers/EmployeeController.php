@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\DataProviders\EmployeeDataProvider;
-use App\Factories\EmployeeTreeFactory;
 use App\Helpers\CommonUtils;
+use App\Helpers\EmployeeTreeFactory;
+use App\Services\EmployeeDataProvider;
 use App\Services\EmployeeTreeService;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
