@@ -19,7 +19,7 @@ use Tests\TestCase;
 class CommonUtilsTest extends TestCase {
 
     public function testIsValidJsonWithNonsenseValues() {
-        $values = [false, true, null, 'abc', '23', 23, '23.5', 23.5, '', ' ', '0', 0];
+        $values = ['abc', '23', '23.5', '', ' ', '0'];
         foreach ($values as $value) {
             $this->assertFalse(CommonUtils::isValidJson($value));
         }
