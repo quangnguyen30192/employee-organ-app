@@ -78,8 +78,8 @@ class EmployeeTreeService {
      */
     private function findBossName(Collection $bossDtos): string {
         if (count($bossDtos) == 0) {
-            // there definitely will be at least one boss, this case never happens
-            throw new InvalidArgumentException("Boss not found - Definitely there is no any data in json file");
+            // this case happens because of loops otherwise there definitely will be at least one boss if the json makes sense
+            throw new InvalidArgumentException("There is a loop in json");
         }
 
         // if there are many bosses found, they should be identical

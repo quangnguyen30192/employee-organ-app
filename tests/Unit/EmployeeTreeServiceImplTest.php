@@ -93,4 +93,23 @@ class EmployeeTreeServiceImplTest extends TestCase {
 
         $this->assertEquals($expected, $actual);
     }
+
+    public function testNonsenseJsonData() {
+        $testString = '{ "Tina": "Pete", "Pete": "Tina" }';
+        $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
+
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('There is a loop in json');
+        $this->employeeTreeService->findBoss($employeeData);
+    }
+
+    public function testNosenseJsonDataComplexHierarchy() {
+        $testString = '{ "Mina": "Nick", "Tim": "Tina", "Tina": "Mina", "Nick" : "Tim" }';
+        $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
+
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('There is a loop in json');
+        $this->employeeTreeService->findBoss($employeeData);
+    }
+
 }
