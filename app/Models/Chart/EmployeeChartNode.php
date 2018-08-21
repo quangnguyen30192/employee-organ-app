@@ -6,8 +6,9 @@
  * Time: 2:36 PM
  */
 
-namespace App\Models;
+namespace App\Models\Chart;
 
+use App\Models\EmployeeNode;
 
 /**
  * Class represents a node in EmployeeChart

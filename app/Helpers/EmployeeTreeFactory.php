@@ -8,8 +8,8 @@
 
 namespace App\Helpers;
 
-use App\Models\EmployeeChart;
-use App\Models\EmployeeChartNode;
+use App\Models\Chart\EmployeeChart;
+use App\Models\Chart\EmployeeChartNode;
 use App\Models\EmployeeNode;
 use App\Models\EmployeeTree;
 use Illuminate\Container\Container;
