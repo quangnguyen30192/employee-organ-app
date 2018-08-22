@@ -1,0 +1,14 @@
+textarea {
+    font-size: 1.6rem;
+    font-family: Monaco;
+    height: 30em;
+    width: 100%;
+}
+
+.container {
+    margin: 2em;
+}
+
+#form > .form-group, .btn {
+    margin-left: 5px;
+}

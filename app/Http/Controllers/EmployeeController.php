@@ -54,7 +54,7 @@ class EmployeeController extends Controller {
             $employeeDtos = $this->employeeDataProvider->parseEmployeeData($jsonData);
             $boss = $this->employeeTreeService->findBoss($employeeDtos);
 
-            $employeeTree = EmployeeTreeFactory::createTree($request->dataViewType, $boss);
+            $employeeTree = EmployeeTreeFactory::createTree("json", $boss);
             $employeeTree->buildTreeOnRootNode($employeeDtos);
 
             return response()->json($employeeTree->jsonSerialize());
