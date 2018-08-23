@@ -12,7 +12,7 @@ namespace App\Models;
 use JsonSerializable;
 
 /**
- * Class EmployeeNode represents a node in a employee hierarchy tree
+ * Class EmployeeNode represents a node in an employee hierarchy tree
  */
 class EmployeeNode implements JsonSerializable {
 

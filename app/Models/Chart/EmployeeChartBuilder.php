@@ -14,12 +14,12 @@ use App\Models\EmployeeTreeBuilder;
 use App\Services\EmployeeTreeService;
 
 /**
- * Class that has responsible for building up employee chart
+ * Class that has responsible for building up an employee chart
  */
 class EmployeeChartBuilder extends EmployeeTreeBuilder {
 
     /**
-     * EmployeeChart constructor.
+     * EmployeeChartBuilder constructor.
      *
      * @param $employeeTreeService
      */

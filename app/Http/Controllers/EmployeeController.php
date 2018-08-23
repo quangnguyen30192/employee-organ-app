@@ -24,11 +24,11 @@ class EmployeeController extends Controller {
     }
 
     /**
-     * Handle json file upload that contains employee data as json format
+     * Handle json file upload that contains the employee data as json format
      *
      * @param Request $request
      *
-     * @return json that represents employee data or error message in case of invalid json input
+     * @return json that represents the employee data or error message in case of invalid json input
      */
     public function upload(Request $request) {
         $file = $request->file('file');
@@ -55,7 +55,7 @@ class EmployeeController extends Controller {
      *
      * @param Request $request
      *
-     * @return json that represents employee data or error message in case of invalid json input
+     * @return json that represents the employee data or error message in case of invalid json input
      */
     public function employeeJsonApi(Request $request) {
         try {

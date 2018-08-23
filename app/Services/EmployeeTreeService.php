@@ -53,7 +53,7 @@ class EmployeeTreeService {
 
     /**
      * Get the boss name from employee dto
-     * If the employeedto has no supervisor then boss name is the employee, otherwise the boss name is supervisor
+     * If the employee dto has no supervisor then boss name is the employee, otherwise the boss name is supervisor
      *
      * @param $employeeDto
      *
@@ -64,20 +64,20 @@ class EmployeeTreeService {
     }
 
     /**
-     * Check that the employedtos input should have the same supervisor and return that supervisor
+     * Check that the employee dtos input should have the same supervisor and return that supervisor
      *
-     * @param $bossDtos employeeDtos whose supervisor might be the boss.
+     * @param $employeeDtos employeeDtos whose supervisor might be the boss.
      *
      * @return name of the boss
      */
-    private function findBossName(Collection $bossDtos): string {
-        if (count($bossDtos) == 0) {
+    private function findBossName(Collection $employeeDtos): string {
+        if (count($employeeDtos) == 0) {
             // this case happens because of loops otherwise there definitely will be at least one boss if the json makes sense
             throw new InvalidArgumentException("There is a loop in json");
         }
 
         // if there are many bosses found then they should be identical
-        $bossNames = $bossDtos->map(function ($bossDto) {
+        $bossNames = $employeeDtos->map(function ($bossDto) {
             return $this->getValidBossName($bossDto);
         })->toArray();
 
@@ -85,13 +85,13 @@ class EmployeeTreeService {
             throw new InvalidArgumentException("There is more than one top boss: " . implode(', ', array_unique($bossNames)));
         }
 
-        return $this->getValidBossName($bossDtos->first());
+        return $this->getValidBossName($employeeDtos->first());
     }
 
     /**
      * Find the subordinate employees of the input supervisor
      *
-     * @param supervisor name
+     * @param supervisor
      * @param $employeeDtos
      *
      * @return array of employee names supervised by the input supervisor

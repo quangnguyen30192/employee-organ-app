@@ -11,7 +11,7 @@ namespace App\Models;
 use App\Services\EmployeeTreeService;
 
 /**
- * Class that has responsible for building up employee tree
+ * Class that has responsible for building up an employee tree
  */
 class EmployeeTreeBuilder {
 
@@ -27,24 +27,23 @@ class EmployeeTreeBuilder {
     }
 
     /**
-     * Build up a employee tree from employee dtos
+     * Build up an employee tree from employee dtos
      *
      * @param array $employeeDtos
      *
-     * @return EmployeeNode
+     * @return EmployeeNode that represents as an employee tree
      */
     public function buildTree(array $employeeDtos): EmployeeNode {
         $boss = $this->employeeTreeService->findBoss($employeeDtos);
 
         $employeeRootNode = $this->newEmployeeNode($boss);
-
         $this->buildTreeFromEmployeeNode($employeeRootNode, $employeeDtos);
 
         return $employeeRootNode;
     }
 
     /**
-     * Build a employee hierarchy tree based on the input employee node by recursively
+     * Build an employee hierarchy tree based on the input employee node by recursively
      * expanding the subordinates under that node.
      *
      * The input employee node would become a tree that has full hierarchy after processed

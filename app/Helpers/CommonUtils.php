@@ -11,6 +11,9 @@ namespace App\Helpers;
 
 use App\Models\EmployeeNode;
 
+/**
+ * Utilities class that provides common functionalties to work with overall application
+ */
 class CommonUtils {
 
     /**
@@ -60,7 +63,7 @@ class CommonUtils {
      * Create successful data response using in Controller
      *
      * @param $dataViewType json or chart
-     * @param $employeeNode employee node represents for employee hierarchy tree
+     * @param $employeeNode employee node represents for the employee hierarchy tree
      *
      * @return array represents successful data response
      */
