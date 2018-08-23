@@ -11,7 +11,8 @@ namespace App\Models\Chart;
 use App\Models\EmployeeNode;
 
 /**
- * Class represents a node in EmployeeChart
+ * Class represents a node in a employee hierarchy chart. it's different to employee tree that it would have different
+ * json format after serialized.
  */
 class EmployeeChartNode extends EmployeeNode {
 

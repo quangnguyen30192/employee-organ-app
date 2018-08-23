@@ -23,7 +23,7 @@ class EmployeeTreeService {
     }
 
     /**
-     * Find the boss on the top and the employee hierarchy
+     * Find the boss on the top of the employee hierarchy
      * The boss is the employee who has no supervisors
      *
      * @param $employeeDtos an array of EmployeeDto
@@ -52,11 +52,12 @@ class EmployeeTreeService {
     }
 
     /**
-     * Get boss name from employeedto that might have empty supervisor
+     * Get the boss name from employee dto
+     * If the employeedto has no supervisor then boss name is the employee, otherwise the boss name is supervisor
      *
      * @param $employeeDto
      *
-     * @return supervisor of employeeDto if it's not empty, otherwise return employee.
+     * @return boss name
      */
     private function getValidBossName(EmployeeDto $employeeDto): string {
         return trim($employeeDto->getSupervisor()) !== "" ? $employeeDto->getSupervisor() : $employeeDto->getEmployee();
@@ -75,7 +76,7 @@ class EmployeeTreeService {
             throw new InvalidArgumentException("There is a loop in json");
         }
 
-        // if there are many bosses found, they should be identical
+        // if there are many bosses found then they should be identical
         $bossNames = $bossDtos->map(function ($bossDto) {
             return $this->getValidBossName($bossDto);
         })->toArray();
@@ -88,18 +89,19 @@ class EmployeeTreeService {
     }
 
     /**
-     * Find the subordinate employees of the input supervisor/employee
+     * Find the subordinate employees of the input supervisor
      *
-     * @param supervisor/employee name
-     * @param $employeeDtos array of EmployeeDto
+     * @param supervisor name
+     * @param $employeeDtos
      *
-     * @return array of employee names supervised by the input employee
+     * @return array of employee names supervised by the input supervisor
      */
     public function findEmployeesUnderSupervisor(string $supervisor, array $employeeDtos): array {
+
         return collect($employeeDtos)->filter(function ($employeeDto) use ($supervisor) {
-            return $employeeDto->getSupervisor() === $supervisor;
-        })->map(function ($employeeDto) {
-            return $employeeDto->getEmployee();
-        })->values()->toArray();
+                return $employeeDto->getSupervisor() === $supervisor;
+            })->map(function ($employeeDto) {
+                return $employeeDto->getEmployee();
+            })->values()->toArray();
     }
 }

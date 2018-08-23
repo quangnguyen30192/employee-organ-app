@@ -23,6 +23,13 @@ class EmployeeController extends Controller {
         return view('index')->with('dataViewTypes', ["json", "chart"]);
     }
 
+    /**
+     * Handle json file upload that contains employee data as json format
+     *
+     * @param Request $request
+     *
+     * @return json that represents employee data or error message in case of invalid json input
+     */
     public function upload(Request $request) {
         $file = $request->file('file');
         if (!$file) {
@@ -43,6 +50,13 @@ class EmployeeController extends Controller {
         }
     }
 
+    /**
+     * API handles the Json POST request
+     *
+     * @param Request $request
+     *
+     * @return json that represents employee data or error message in case of invalid json input
+     */
     public function employeeJsonApi(Request $request) {
         try {
             $employeeTreeBuilder = EmployeeTreeBuilderFactory::createTreeBuilder();

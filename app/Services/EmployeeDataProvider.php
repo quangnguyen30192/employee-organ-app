@@ -31,7 +31,7 @@ class EmployeeDataProvider {
     /**
      * Parse the json string input and convert them into an array of dto objects
      *
-     * @param $data json string input or array
+     * @param $data json string input or associative array represents key and value of json data.
      *
      * @return array of EmployeeDtos
      *
