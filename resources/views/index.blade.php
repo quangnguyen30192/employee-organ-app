@@ -21,7 +21,6 @@
             @endif
 
             <button type="submit" class="btn btn-default btn-primary">Submit</button>
-            {{ csrf_field() }}
         </form>
     </div>
 
