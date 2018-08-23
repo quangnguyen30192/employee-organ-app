@@ -9,7 +9,7 @@
 namespace App\Helpers;
 
 
-use App\Models\EmployeeTree;
+use App\Models\EmployeeNode;
 
 class CommonUtils {
 
@@ -60,16 +60,16 @@ class CommonUtils {
      * Create successful data response using in Controller
      *
      * @param $dataViewType json or chart
-     * @param $employeeTree
+     * @param $employeeNode employee node represents for employee hierarchy tree
      *
      * @return array represents successful data response
      */
-    public static function createsSuccessResponse(string $dataViewType, EmployeeTree $employeeTree): array {
+    public static function createsSuccessResponse(string $dataViewType, EmployeeNode $employeeNode): array {
         return [
             'status' => 'success',
             'result' => [
                 'dataViewType' => $dataViewType,
-                'data' => $employeeTree,
+                'data' => $employeeNode,
             ],
             'message' => 'Load data successfully'
         ];

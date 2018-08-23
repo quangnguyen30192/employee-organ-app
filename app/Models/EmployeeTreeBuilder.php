@@ -1,0 +1,68 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: qnguyen
+ * Date: 8/17/18
+ * Time: 12:10 PM
+ */
+
+namespace App\Models;
+
+use App\Services\EmployeeTreeService;
+
+/**
+ * Class that has responsible for building up employee tree
+ */
+class EmployeeTreeBuilder {
+
+    private $employeeTreeService;
+
+    /**
+     * EmployeeTreeBuilder constructor.
+     *
+     * @param EmployeeTreeService $employeeTreeService
+     */
+    public function __construct(EmployeeTreeService $employeeTreeService) {
+        $this->employeeTreeService = $employeeTreeService;
+    }
+
+    /**
+     * Build up a employee tree from employee dtos
+     *
+     * @param array $employeeDtos
+     *
+     * @return EmployeeNode
+     */
+    public function buildTree(array $employeeDtos): EmployeeNode {
+        $boss = $this->employeeTreeService->findBoss($employeeDtos);
+
+        $employeeRootNode = $this->newEmployeeNode($boss);
+
+        $this->buildTreeFromEmployeeNode($employeeRootNode, $employeeDtos);
+
+        return $employeeRootNode;
+    }
+
+    /**
+     * Build a employee hierarchy tree based on the input employee node by recursively
+     * expanding the subordinates under that node.
+     *
+     * The input employee node would become a tree that has full hierarchy after processed
+     *
+     * @param $employeeNode
+     * @param $employeeDtos
+     */
+    private function buildTreeFromEmployeeNode(EmployeeNode $employeeNode, array $employeeDtos): void {
+        $subordinates = $this->employeeTreeService->findEmployeesUnderSupervisor($employeeNode->getEmployeeName(), $employeeDtos);
+
+        foreach ($subordinates as $subordinate) {
+            $subEmpNode = $this->newEmployeeNode($subordinate);
+            $employeeNode->addSubordinate($subEmpNode);
+            $this->buildTreeFromEmployeeNode($subEmpNode, $employeeDtos);
+        }
+    }
+
+    protected function newEmployeeNode(string $employeeName): EmployeeNode {
+        return new EmployeeNode($employeeName);
+    }
+}

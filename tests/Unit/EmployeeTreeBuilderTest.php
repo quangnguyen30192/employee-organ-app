@@ -9,13 +9,12 @@
 namespace Tests\Unit;
 
 
-use App\Models\EmployeeNode;
-use App\Models\EmployeeTree;
+use App\Models\EmployeeTreeBuilder;
 use App\Services\EmployeeDataProvider;
 use App\Services\EmployeeTreeService;
 use Tests\TestCase;
 
-class EmployeeTreeTest extends TestCase {
+class EmployeeTreeBuilderTest extends TestCase {
 
     private $employeeDataProvider;
     private $employeeTreeService;
@@ -29,9 +28,8 @@ class EmployeeTreeTest extends TestCase {
         $testString = '{ "Pete": "Nick", "Barbara": "Nick", "Nick": "Sophie", "Sophie": "Jonas" }';
         $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
 
-        $boss = $this->employeeTreeService->findBoss($employeeData);
-        $employeeTree = new EmployeeTree(new EmployeeNode($boss), $this->employeeTreeService);
-        $employeeTree->buildTreeOnRootNode($employeeData);
+        $employeeTreeBuilder = new EmployeeTreeBuilder($this->employeeTreeService);
+        $employeeTree = $employeeTreeBuilder->buildTree($employeeData);
 
         $this->assertSame(json_encode($employeeTree), '{"Jonas":[{"Sophie":[{"Nick":[{"Pete":[]},{"Barbara":[]}]}]}]}');
     }

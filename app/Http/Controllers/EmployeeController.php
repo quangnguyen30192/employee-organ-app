@@ -3,22 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\CommonUtils;
-use App\Helpers\EmployeeTreeFactory;
+use App\Helpers\EmployeeTreeBuilderFactory;
 use App\Services\EmployeeDataProvider;
-use App\Services\EmployeeTreeService;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 
 class EmployeeController extends Controller {
 
-    private $employeeTreeService;
     private $employeeDataProvider;
 
     /**
      * EmployeeController constructor.
      */
-    public function __construct(EmployeeTreeService $employeeTreeService, EmployeeDataProvider $employeeDataProvider) {
-        $this->employeeTreeService = $employeeTreeService;
+    public function __construct(EmployeeDataProvider $employeeDataProvider) {
         $this->employeeDataProvider = $employeeDataProvider;
     }
 
@@ -34,11 +31,10 @@ class EmployeeController extends Controller {
 
         $fileContent = file_get_contents($request->file('file'));
         try {
-            $employeeDtos = $this->employeeDataProvider->parseEmployeeData($fileContent);
-            $boss = $this->employeeTreeService->findBoss($employeeDtos);
+            $employeeTreeBuilder = EmployeeTreeBuilderFactory::createTreeBuilder($request->dataViewType);
 
-            $employeeTree = EmployeeTreeFactory::createTree($request->dataViewType, $boss);
-            $employeeTree->buildTreeOnRootNode($employeeDtos);
+            $employeeDtos = $this->employeeDataProvider->parseEmployeeData($fileContent);
+            $employeeTree = $employeeTreeBuilder->buildTree($employeeDtos);
 
             return response()->json(CommonUtils::createsSuccessResponse($request->dataViewType, $employeeTree));
         } catch (InvalidArgumentException $exception) {
@@ -51,11 +47,10 @@ class EmployeeController extends Controller {
         $jsonData = $request->except('_token');
 
         try {
-            $employeeDtos = $this->employeeDataProvider->parseEmployeeData($jsonData);
-            $boss = $this->employeeTreeService->findBoss($employeeDtos);
+            $employeeTreeBuilder = EmployeeTreeBuilderFactory::createTreeBuilder();
 
-            $employeeTree = EmployeeTreeFactory::createTree("json", $boss);
-            $employeeTree->buildTreeOnRootNode($employeeDtos);
+            $employeeDtos = $this->employeeDataProvider->parseEmployeeData($jsonData);
+            $employeeTree = $employeeTreeBuilder->buildTree($employeeDtos);
 
             return response()->json($employeeTree->jsonSerialize());
         } catch (InvalidArgumentException $exception) {
