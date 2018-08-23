@@ -44,12 +44,10 @@ class EmployeeController extends Controller {
     }
 
     public function employeeJsonApi(Request $request) {
-        $jsonData = $request->except('_token');
-
         try {
             $employeeTreeBuilder = EmployeeTreeBuilderFactory::createTreeBuilder();
 
-            $employeeDtos = $this->employeeDataProvider->parseEmployeeData($jsonData);
+            $employeeDtos = $this->employeeDataProvider->parseEmployeeData($request->json());
             $employeeTree = $employeeTreeBuilder->buildTree($employeeDtos);
 
             return response()->json($employeeTree->jsonSerialize());
