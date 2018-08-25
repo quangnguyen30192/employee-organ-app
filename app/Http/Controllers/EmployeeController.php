@@ -45,8 +45,7 @@ class EmployeeController extends Controller {
 
             return response()->json(CommonUtils::createsSuccessResponse($request->dataViewType, $employeeTree));
         } catch (InvalidArgumentException $exception) {
-            $errorMessage = $exception->getMessage();
-            return response()->json(CommonUtils::createsErrorResponse($errorMessage));
+            return response()->json(CommonUtils::createsErrorResponse($exception->getMessage()));
         }
     }
 
@@ -64,10 +63,9 @@ class EmployeeController extends Controller {
             $employeeDtos = $this->employeeDataProvider->parseEmployeeData($request->json());
             $employeeTree = $employeeTreeBuilder->buildTree($employeeDtos);
 
-            return response()->json($employeeTree->jsonSerialize());
+            return response()->json($employeeTree);
         } catch (InvalidArgumentException $exception) {
-            $errorMessage = $exception->getMessage();
-            return response()->json(['error' => $errorMessage]);
+            return response()->json(['error' => $exception->getMessage()]);
         }
     }
 

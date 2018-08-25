@@ -43,7 +43,7 @@ class EmployeeTreeBuilder {
     }
 
     /**
-     * Build an employee hierarchy tree based on the input employee node by recursively
+     * Build up an employee hierarchy tree based on the input employee node by recursively
      * expanding the subordinates under that node.
      *
      * The input employee node would become a tree that has full hierarchy after processed
