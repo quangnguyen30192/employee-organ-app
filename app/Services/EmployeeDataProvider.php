@@ -42,7 +42,7 @@ class EmployeeDataProvider {
 
         $employeeDtos = [];
         foreach ($array as $key => $value) {
-            $value = $this->formatJsonValue($value);
+            $value = $this->convertToEmptyIfNullOrEmptyString($value);
             $this->validateKeyValue($key, $value);
 
             $employeeDtos[] = new EmployeeDto($key, $value);
@@ -58,7 +58,7 @@ class EmployeeDataProvider {
      *
      * @return empty string or the value input if it's neither null nor a string with empty value
      */
-    private function formatJsonValue($value) {
+    private function convertToEmptyIfNullOrEmptyString($value) {
         if ($value === null || (is_string($value) && CommonUtils::isEmptyOrBlank($value))) {
             return "";
         }
