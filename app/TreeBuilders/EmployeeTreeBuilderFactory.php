@@ -6,15 +6,12 @@
  * Time: 2:41 AM
  */
 
-namespace App\Helpers;
+namespace App\TreeBuilders;
 
-use App\TreeBuilders\EmployeeChartBuilder;
-use App\TreeBuilders\EmployeeTreeBuilder;
 use Illuminate\Container\Container;
 
 /**
- * The factory that provides EmployeeTreeBuilder
- * @package App
+ * The factory that provides EmployeeTreeBuilderBase subclasses
  */
 class EmployeeTreeBuilderFactory {
 
@@ -28,7 +25,7 @@ class EmployeeTreeBuilderFactory {
      *
      * @return EmployeeTreeBuilder
      */
-    public static function createTreeBuilder(string $dataViewType = 'json'): EmployeeTreeBuilder {
+    public static function createTreeBuilder(string $dataViewType = 'json'): EmployeeTreeBuilderBase {
         if ($dataViewType === "json") {
             // create EmployeeTreeBuilder from IoC container in which also provides EmployeeTreeService rather than using new operator
             return Container::getInstance()->make(EmployeeTreeBuilder::class);

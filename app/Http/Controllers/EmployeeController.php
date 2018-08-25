@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\CommonUtils;
-use App\Helpers\EmployeeTreeBuilderFactory;
 use App\Services\EmployeeDataProvider;
+use App\TreeBuilders\EmployeeTreeBuilderFactory;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 

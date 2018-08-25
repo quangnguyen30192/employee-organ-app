@@ -13,20 +13,21 @@ use App\Models\EmployeeNode;
 use App\Services\EmployeeTreeService;
 
 /**
- * Class that has responsible for building up an employee chart
+ * Implementation of EmployeeTreeBuilderBase to build up an employee tree which has json format conforming
+ * to employee chart at the view: OrganChart (https://github.com/dabeng/OrgChart)
  */
-class EmployeeChartBuilder extends EmployeeTreeBuilder {
+class EmployeeChartBuilder extends EmployeeTreeBuilderBase {
 
     /**
      * EmployeeChartBuilder constructor.
      *
-     * @param $employeeTreeService
+     * @param EmployeeTreeService $employeeTreeService
      */
     public function __construct(EmployeeTreeService $employeeTreeService) {
         parent::__construct($employeeTreeService);
     }
 
-    protected function newEmployeeNode(string $employeeName): EmployeeNode {
+    protected function createEmployeeNode(string $employeeName): EmployeeNode {
         return new EmployeeChartNode($employeeName);
     }
 }
