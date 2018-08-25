@@ -9,10 +9,10 @@
 namespace Tests\Unit;
 
 
-use App\Models\Chart\EmployeeChartBuilder;
-use App\Models\EmployeeTreeBuilder;
 use App\Services\EmployeeDataProvider;
 use App\Services\EmployeeTreeService;
+use App\TreeBuilders\EmployeeChartBuilder;
+use App\TreeBuilders\EmployeeTreeBuilder;
 use Tests\TestCase;
 
 class EmployeeTreeBuilderTest extends TestCase {

@@ -6,11 +6,10 @@
  * Time: 12:10 PM
  */
 
-namespace App\Models\Chart;
+namespace App\TreeBuilders;
 
-
+use App\Models\EmployeeChartNode;
 use App\Models\EmployeeNode;
-use App\Models\EmployeeTreeBuilder;
 use App\Services\EmployeeTreeService;
 
 /**

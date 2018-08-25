@@ -6,8 +6,9 @@
  * Time: 12:10 PM
  */
 
-namespace App\Models;
+namespace App\TreeBuilders;
 
+use App\Models\EmployeeNode;
 use App\Services\EmployeeTreeService;
 
 /**

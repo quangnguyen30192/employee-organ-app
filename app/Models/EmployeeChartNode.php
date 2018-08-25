@@ -6,9 +6,7 @@
  * Time: 2:36 PM
  */
 
-namespace App\Models\Chart;
-
-use App\Models\EmployeeNode;
+namespace App\Models;
 
 /**
  * Class represents a node in an employee hierarchy chart. it's different to the employee tree that it would have different

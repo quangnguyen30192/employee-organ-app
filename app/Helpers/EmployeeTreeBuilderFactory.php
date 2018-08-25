@@ -8,8 +8,8 @@
 
 namespace App\Helpers;
 
-use App\Models\Chart\EmployeeChartBuilder;
-use App\Models\EmployeeTreeBuilder;
+use App\TreeBuilders\EmployeeChartBuilder;
+use App\TreeBuilders\EmployeeTreeBuilder;
 use Illuminate\Container\Container;
 
 /**
