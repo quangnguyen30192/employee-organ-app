@@ -60,6 +60,17 @@ class CommonUtils {
     }
 
     /**
+     * Check the string input is empty or blank
+     *
+     * @param string $str
+     *
+     * @return true if the input string is empty or blank, false for otherwise
+     */
+    public static function isEmptyOrBlank(string $str): bool {
+        return trim($str) === "";
+    }
+
+    /**
      * Create successful data response using in Controller
      *
      * @param $dataViewType json or chart

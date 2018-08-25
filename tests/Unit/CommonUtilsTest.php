@@ -18,7 +18,7 @@ use Tests\TestCase;
  */
 class CommonUtilsTest extends TestCase {
 
-    public function testIsValidJsonWithNonsenseValues() {
+    public function testIsValidJsonWithInvalidValues() {
         $values = ['abc', '23', '23.5', '', ' ', '0'];
         foreach ($values as $value) {
             $this->assertFalse(CommonUtils::isValidJson($value));
@@ -86,6 +86,12 @@ class CommonUtilsTest extends TestCase {
         $this->assertEquals($expected, $actual);
     }
 
+    public function testIsValidJsonWithNullKey() {
+        $testString = '{ null : "Nick" }';
+        $actual = CommonUtils::isValidJson($testString);
+        $this->assertFalse($actual);
+    }
+
     public function testIsValidJsonWithUtf8() {
         $testString = '{ "База данни грешка": "База данни грешка test"}';
         $actual = CommonUtils::isValidJson($testString);
@@ -112,4 +118,18 @@ class CommonUtilsTest extends TestCase {
         $this->assertFalse($actual);
     }
 
+    public function testIsEmptyOrBlankCheckEmpty() {
+        $actual = CommonUtils::isEmptyOrBlank('');
+        $this->assertTrue($actual);
+    }
+
+    public function testIsEmptyOrBlankCheckBlank() {
+        $actual = CommonUtils::isEmptyOrBlank('   ');
+        $this->assertTrue($actual);
+    }
+
+    public function testIsEmpty() {
+        $actual = CommonUtils::isEmptyOrBlank('Hello World');
+        $this->assertFalse($actual);
+    }
 }

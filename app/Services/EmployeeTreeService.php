@@ -69,7 +69,8 @@ class EmployeeTreeService {
      * @return boss name
      */
     private function getValidBossName(EmployeeDto $employeeDto): string {
-        return trim($employeeDto->getSupervisor()) !== "" ? $employeeDto->getSupervisor() : $employeeDto->getEmployee();
+        $bossName = $employeeDto->getSupervisor();
+        return CommonUtils::isEmptyOrBlank($bossName) ? $employeeDto->getEmployee() : $bossName;
     }
 
     /**

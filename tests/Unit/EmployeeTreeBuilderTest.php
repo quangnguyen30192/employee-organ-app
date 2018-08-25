@@ -9,6 +9,7 @@
 namespace Tests\Unit;
 
 
+use App\Models\Chart\EmployeeChartBuilder;
 use App\Models\EmployeeTreeBuilder;
 use App\Services\EmployeeDataProvider;
 use App\Services\EmployeeTreeService;
@@ -34,4 +35,13 @@ class EmployeeTreeBuilderTest extends TestCase {
         $this->assertSame(json_encode($employeeTree), '{"Jonas":[{"Sophie":[{"Nick":[{"Pete":[]},{"Barbara":[]}]}]}]}');
     }
 
+    public function testBuildChart() {
+        $testString = '{ "Pete": "Nick", "Barbara": "Nick", "Nick": "Sophie", "Sophie": "Jonas" }';
+        $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
+
+        $employeeTreeBuilder = new EmployeeChartBuilder($this->employeeTreeService);
+        $employeeTree = $employeeTreeBuilder->buildTree($employeeData);
+
+        $this->assertSame(json_encode($employeeTree), '{"name":"Jonas","children":[{"name":"Sophie","children":[{"name":"Nick","children":[{"name":"Pete","children":[]},{"name":"Barbara","children":[]}]}]}]}');
+    }
 }

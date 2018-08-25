@@ -42,12 +42,27 @@ class EmployeeDataProvider {
 
         $employeeDtos = [];
         foreach ($array as $key => $value) {
+            $value = $this->formatJsonValue($value);
             $this->validateKeyValue($key, $value);
 
             $employeeDtos[] = new EmployeeDto($key, $value);
         }
 
         return $employeeDtos;
+    }
+
+    /**
+     * if the input json value is null or empty string, then convert to empty string
+     *
+     * @param $value the value of the json element
+     *
+     * @return empty string or the value input if it's neither null nor a string with empty value
+     */
+    private function formatJsonValue($value) {
+        if ($value === null || (is_string($value) && CommonUtils::isEmptyOrBlank($value))) {
+            return "";
+        }
+        return $value;
     }
 
     /**
@@ -66,6 +81,11 @@ class EmployeeDataProvider {
             }
 
             throw new InvalidArgumentException("Value is not a string - for Key: $key");
+        }
+
+        if (CommonUtils::isEmptyOrBlank($key)) {
+            $errorMsg = "Json data contains empty key" . ($value == "" ? " which also has empty value" : " which has the value: $value");
+            throw new InvalidArgumentException($errorMsg);
         }
 
         if ($key === $value) {
@@ -95,7 +115,7 @@ class EmployeeDataProvider {
             $this->jsonParser->parse($json, JsonParser::DETECT_KEY_CONFLICTS);
         } catch (DuplicateKeyException $e) {
             $details = $e->getDetails();
-            throw new InvalidArgumentException('Duplicate employee \'' . $details['key'] . '\' at line ' . $details['line']);
+            throw new InvalidArgumentException('Duplicate employee ' . $details['key'] . ' at line ' . $details['line']);
         }
 
         return $arr;

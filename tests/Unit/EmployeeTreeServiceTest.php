@@ -12,7 +12,7 @@ use App\Services\EmployeeDataProvider;
 use App\Services\EmployeeTreeService;
 use PHPUnit\Framework\TestCase;
 
-class EmployeeTreeServiceImplTest extends TestCase {
+class EmployeeTreeServiceTest extends TestCase {
 
     private $employeeDataProvider;
     private $employeeTreeService;
@@ -48,7 +48,7 @@ class EmployeeTreeServiceImplTest extends TestCase {
         $this->employeeTreeService->findBoss($employeeData);
     }
 
-    public function testFindBossWithNonsenseHierarchy() {
+    public function testFindBossWith3DifferentBosses() {
         $testString = '{ "Pete": "Nick", "Tim": "Jame", "Tina": "Mina" }';
         $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
 
@@ -92,7 +92,6 @@ class EmployeeTreeServiceImplTest extends TestCase {
 
         $this->assertEquals($expected, $actual);
     }
-
     public function testFindEmployeeUnderSupervisorDeepHierarchy() {
         $testString = '{ "Lucie": "Jame", "Jame": "Pete", "Pete": "Tina", "Barbara": "Tina" }';
         $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
@@ -103,7 +102,29 @@ class EmployeeTreeServiceImplTest extends TestCase {
         $this->assertEquals($expected, $actual);
     }
 
-    public function testNonsenseJsonData() {
+    public function testFindBossWithOneEmployeeData() {
+        $testString = '{ "Pete": "Tina"}';
+        $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
+
+        $actual = $this->employeeTreeService->findBoss($employeeData);
+        $this->assertSame($actual, "Tina");
+    }
+
+    public function testFindBossWithOneEmployeeDataWithoutSupervisor() {
+        $testString = '{ "Pete": ""}';
+        $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
+
+        $actual = $this->employeeTreeService->findBoss($employeeData);
+        $this->assertSame($actual, "Pete");
+    }
+
+    public function testFindBossEmptyEmployeeData() {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('There is no employee dtos provided');
+        $this->employeeTreeService->findBoss([]);
+    }
+
+    public function testLoopJsonData() {
         $testString = '{ "Tina": "Pete", "Pete": "Tina" }';
         $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
 
@@ -112,7 +133,7 @@ class EmployeeTreeServiceImplTest extends TestCase {
         $this->employeeTreeService->findBoss($employeeData);
     }
 
-    public function testNosenseJsonDataComplexHierarchy() {
+    public function testLoopJsonDataComplexHierarchy() {
         $testString = '{ "Mina": "Nick", "Tim": "Tina", "Tina": "Mina", "Nick" : "Tim" }';
         $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
 
