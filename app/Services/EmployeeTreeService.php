@@ -33,8 +33,8 @@ class EmployeeTreeService {
      * @throws InvalidArgumentException if there is more than one boss found
      */
     public function findBoss(array $employeeDtos): string {
-        if (count($employeeDtos) == 1) {
-            return $this->getValidBossName($employeeDtos[0]);
+        if (count($employeeDtos) == 0) {
+            throw new InvalidArgumentException("There is no employee dtos provided");
         }
 
         $employees = collect($employeeDtos)->map(function ($employeeDto) {
@@ -47,6 +47,15 @@ class EmployeeTreeService {
 
             return !in_array($supervisor, $employees);
         });
+
+        /*
+         * This case happens because the top boss is also supervised by a subordinate employee - this indicates that
+         * there is a loop in json data
+         * There will be definitely at least one boss if the json data makes sense.
+         */
+        if (count($bossDtos) == 0) {
+            throw new InvalidArgumentException("There is a loop in json");
+        }
 
         return $this->findBossName($bossDtos);
     }
@@ -64,18 +73,13 @@ class EmployeeTreeService {
     }
 
     /**
-     * Check that the employee dtos input should have the same supervisor and return that supervisor
+     * Check that the employee dtos input should only have the same supervisor and return that supervisor
      *
      * @param $employeeDtos employeeDtos whose supervisor might be the boss.
      *
      * @return name of the boss
      */
     private function findBossName(Collection $employeeDtos): string {
-        if (count($employeeDtos) == 0) {
-            // this case happens because of loops otherwise there definitely will be at least one boss if the json makes sense
-            throw new InvalidArgumentException("There is a loop in json");
-        }
-
         // if there are many bosses found then they should be identical
         $bossNames = $employeeDtos->map(function ($bossDto) {
             return $this->getValidBossName($bossDto);
