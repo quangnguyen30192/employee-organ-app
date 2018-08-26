@@ -60,14 +60,25 @@ class CommonUtils {
     }
 
     /**
-     * Check the string input is empty or blank
+     * Check the value input is null or empty/blank string
      *
-     * @param string $str
+     * @param $input
      *
-     * @return true if the input string is empty or blank, false for otherwise
+     * @return true if the value input is empty/blank string or null, false for otherwise
      */
-    public static function isEmptyOrBlank(string $str): bool {
-        return trim($str) === '';
+    public static function isEmptyOrBlankStringOrNull($input): bool {
+        return $input === null || (is_string($input) && trim($input) === '');
+    }
+
+    /**
+     * Return trimmed string if the value input is string, otherwise return that value
+     *
+     * @param $input
+     *
+     * @return trimmed string or the value input
+     */
+    public static function trimStringOrValue($input) {
+        return is_string($input) ? trim($input) : $input;
     }
 
     /**

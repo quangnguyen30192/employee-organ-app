@@ -42,27 +42,13 @@ class EmployeeDataProvider {
 
         $employeeDtos = [];
         foreach ($array as $key => $value) {
-            $value = $this->convertToEmptyIfNullOrEmptyString($value);
+            $value = CommonUtils::isEmptyOrBlankStringOrNull($value) ? '' : $value;
             $this->validateKeyValue($key, $value);
 
-            $employeeDtos[] = new EmployeeDto($key, $value);
+            $employeeDtos[] = new EmployeeDto(trim($key), trim($value));
         }
 
         return $employeeDtos;
-    }
-
-    /**
-     * if the input json value is null or empty string, then convert to empty string
-     *
-     * @param $value the value of the json element
-     *
-     * @return empty string or the value input if it's neither null nor a string with empty value
-     */
-    private function convertToEmptyIfNullOrEmptyString($value) {
-        if ($value === null || (is_string($value) && CommonUtils::isEmptyOrBlank($value))) {
-            return "";
-        }
-        return $value;
     }
 
     /**
@@ -75,21 +61,34 @@ class EmployeeDataProvider {
      * @param $value
      */
     private function validateKeyValue(string $key, $value): void {
+        $this->validateKey($key, $value);
+
+        $this->validateValue($key, $value);
+
+        if ($key === $value) {
+            throw new InvalidArgumentException("Employee and supervisor have the same name: '$key'");
+        }
+    }
+
+    private function validateKey(string $key, $value) {
+        if (CommonUtils::isEmptyOrBlankStringOrNull($key)) {
+            $errorMsg = 'Json data contains empty key';
+            if (CommonUtils::isEmptyOrBlankStringOrNull($value)) {
+                $errorMsg .= ' where also has empty value';
+            } else {
+                $errorMsg .= " where has the value: " . CommonUtils::trimStringOrValue($value);
+            }
+            throw new InvalidArgumentException($errorMsg);
+        }
+    }
+
+    private function validateValue(string $key, $value) {
         if (!is_string($value)) {
             if (is_object($value) || is_array($value)) {
                 throw new InvalidArgumentException('Json file content should not contain nested multi-dimensional json');
             }
 
             throw new InvalidArgumentException("Value is not a string - for Key: $key");
-        }
-
-        if (CommonUtils::isEmptyOrBlank($key)) {
-            $errorMsg = 'Json data contains empty key' . ($value === '' ? ' which also has empty value' : " which has the value: $value");
-            throw new InvalidArgumentException($errorMsg);
-        }
-
-        if ($key === $value) {
-            throw new InvalidArgumentException("Employee and supervisor have the same name: '$key'");
         }
     }
 
@@ -120,5 +119,4 @@ class EmployeeDataProvider {
 
         return $arr;
     }
-
 }

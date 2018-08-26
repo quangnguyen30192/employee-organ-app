@@ -118,18 +118,44 @@ class CommonUtilsTest extends TestCase {
         $this->assertFalse($actual);
     }
 
-    public function testIsEmptyOrBlankCheckEmpty() {
-        $actual = CommonUtils::isEmptyOrBlank('');
+    public function testIsEmptyOrBlankTestEmpty() {
+        $actual = CommonUtils::isEmptyOrBlankStringOrNull('');
         $this->assertTrue($actual);
     }
 
-    public function testIsEmptyOrBlankCheckBlank() {
-        $actual = CommonUtils::isEmptyOrBlank('   ');
+    public function testIsEmptyOrBlankTestBlank() {
+        $actual = CommonUtils::isEmptyOrBlankStringOrNull('   ');
         $this->assertTrue($actual);
     }
 
-    public function testIsEmpty() {
-        $actual = CommonUtils::isEmptyOrBlank('Hello World');
+    public function testIsEmptyOrBlankCheckBlanksTestNotString() {
+        $actual = CommonUtils::isEmptyOrBlankStringOrNull(1231);
         $this->assertFalse($actual);
+    }
+
+    public function testIsEmptyOrBlankCheckBlanksTestNull() {
+        $actual = CommonUtils::isEmptyOrBlankStringOrNull(null);
+        $this->assertTrue($actual);
+    }
+
+    public function testisEmptyOrBlankIsEmpty() {
+        $actual = CommonUtils::isEmptyOrBlankStringOrNull('Hello World');
+        $this->assertFalse($actual);
+    }
+
+    public function testTrimStringOrValueTestString() {
+        $actual = CommonUtils::trimStringOrValue('            Hello World               ');
+        $this->assertSame('Hello World', $actual);
+    }
+
+    public function testTrimStringOrValueTestNotString() {
+        $actual = CommonUtils::trimStringOrValue(1123);
+        $this->assertSame(1123, $actual);
+
+    }
+
+    public function testTrimStringOrValueTestNull() {
+        $actual = CommonUtils::trimStringOrValue(null);
+        $this->assertNull($actual);
     }
 }

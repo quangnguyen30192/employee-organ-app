@@ -70,7 +70,7 @@ class EmployeeTreeService {
      */
     private function getValidBossName(EmployeeDto $employeeDto): string {
         $bossName = $employeeDto->getSupervisor();
-        return CommonUtils::isEmptyOrBlank($bossName) ? $employeeDto->getEmployee() : $bossName;
+        return CommonUtils::isEmptyOrBlankStringOrNull($bossName) ? $employeeDto->getEmployee() : $bossName;
     }
 
     /**

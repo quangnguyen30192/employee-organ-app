@@ -43,6 +43,14 @@ class EmployeeJsonDataProviderTest extends TestCase {
         $this->employeeDataProvider->parseEmployeeData($testString);
     }
 
+    public function testParseJsonShouldOnlyHaveValueAsStringTestWithEmptyKey() {
+        $testString = '{ "Pete": "Nick", "  ": 1, "Nick": "Sophie", "Sophie": "Jonas" }';
+
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Json data contains empty key where has the value: 1');
+        $this->employeeDataProvider->parseEmployeeData($testString);
+    }
+
     public function testParseJsonCanHaveNullValue() {
         $testString = '{ "Pete": "Nick", "Barbara": null, "Nick": "Sophie", "Sophie": "Jonas" }';
 
@@ -73,24 +81,61 @@ class EmployeeJsonDataProviderTest extends TestCase {
         $this->assertEquals($expected, $actual);
     }
 
+    public function testParseJsonCanHaveEmptyValueAndTestingTrim() {
+        $testString = '{ "Pete   ": " Nick " , "  Barbara  ": "  ", "   Nick": "Sophie", "Sophie  ": "" }';
+
+        $actual = $this->employeeDataProvider->parseEmployeeData($testString);
+
+        $expected = [
+            new EmployeeDto("Pete", "Nick"),
+            new EmployeeDto("Barbara", ""),
+            new EmployeeDto("Nick", "Sophie"),
+            new EmployeeDto("Sophie", "")
+        ];
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testParseJsonCanHaveNullEmptyValueAndTestingTrim() {
+        $testString = '{ "Pete   ": " Nick " , "  Barbara  ": null, "   Nick": "Sophie", "Sophie  ": "" }';
+
+        $actual = $this->employeeDataProvider->parseEmployeeData($testString);
+
+        $expected = [
+            new EmployeeDto("Pete", "Nick"),
+            new EmployeeDto("Barbara", ""),
+            new EmployeeDto("Nick", "Sophie"),
+            new EmployeeDto("Sophie", "")
+        ];
+
+        $this->assertEquals($expected, $actual);
+    }
+
     public function testJsonShouldNotHaveEmptyKey() {
         $testString = '{ "": "Jim" }';
         $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage('Json data contains empty key which has the value: Jim');
+        $this->expectExceptionMessage('Json data contains empty key where has the value: Jim');
+        $this->employeeDataProvider->parseEmployeeData($testString);
+    }
+
+    public function testJsonShouldNotHaveEmptyKeyTrimValue() {
+        $testString = '{ "": "    Jim    " }';
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Json data contains empty key where has the value: Jim');
         $this->employeeDataProvider->parseEmployeeData($testString);
     }
 
     public function testJsonShouldNotHaveEmptyKeyAndValue() {
         $testString = '{ "": "" }';
         $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage('Json data contains empty key which also has empty value');
+        $this->expectExceptionMessage('Json data contains empty key where also has empty value');
         $this->employeeDataProvider->parseEmployeeData($testString);
     }
 
     public function testJsonShouldNotHaveEmptyKeyAndNullValue() {
         $testString = '{ "": null }';
         $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage('Json data contains empty key which also has empty value');
+        $this->expectExceptionMessage('Json data contains empty key where also has empty value');
         $this->employeeDataProvider->parseEmployeeData($testString);
     }
 
