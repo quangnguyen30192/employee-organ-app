@@ -101,6 +101,13 @@ class EmployeeJsonDataProviderTest extends TestCase {
         $this->employeeDataProvider->parseEmployeeData($testString);
     }
 
+    public function testJsonShouldNotHaveNullKeyNullValue() {
+        $testString = '{ null: null }';
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Json string input is not valid');
+        $this->employeeDataProvider->parseEmployeeData($testString);
+    }
+
     public function testParseJsonShouldNotHaveKeyAsString() {
         $testString = '{ "Pete": "Nick", Barbara: 1, "Nick": "Sophie", "Sophie": "Jonas" }';
 
@@ -146,6 +153,14 @@ class EmployeeJsonDataProviderTest extends TestCase {
 
     public function testEmptyJson() {
         $testString = '{}';
+
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Json string input is not valid');
+        $this->employeeDataProvider->parseEmployeeData($testString);
+    }
+
+    public function testEmptyStringRequest() {
+        $testString = '';
 
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Json string input is not valid');

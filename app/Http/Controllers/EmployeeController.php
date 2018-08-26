@@ -60,7 +60,13 @@ class EmployeeController extends Controller {
         try {
             $employeeTreeBuilder = EmployeeTreeBuilderFactory::createTreeBuilder();
 
-            $employeeDtos = $this->employeeDataProvider->parseEmployeeData($request->json());
+            /*
+             * Use $request->getContent() to get json request as a string for proper validation instead of using $request->json()
+             * which would return empty json body if the json request is invalid (e.g: not well-formed or key duplication,.. )
+             */
+            $json = $request->getContent();
+            $employeeDtos = $this->employeeDataProvider->parseEmployeeData($json);
+
             $employeeTree = $employeeTreeBuilder->buildTree($employeeDtos);
 
             return response()->json($employeeTree);

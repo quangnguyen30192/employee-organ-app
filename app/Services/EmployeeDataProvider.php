@@ -31,14 +31,14 @@ class EmployeeDataProvider {
     /**
      * Parse the json string input and convert them into an array of dto objects
      *
-     * @param $data json string input or associative array represents key and value of json data.
+     * @param $json json string input
      *
      * @return array of EmployeeDtos
      *
      * @throws InvalidArgumentException if the json string input is invalid or if the json has duplicate keys
      */
-    public function parseEmployeeData($data): array {
-        $array = is_string($data) ? $this->validateJson($data) : $data;
+    public function parseEmployeeData(string $json): array {
+        $array = $this->validateJson($json);
 
         $employeeDtos = [];
         foreach ($array as $key => $value) {
