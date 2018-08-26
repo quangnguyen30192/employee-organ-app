@@ -119,27 +119,22 @@ class CommonUtilsTest extends TestCase {
     }
 
     public function testIsEmptyOrBlankTestEmpty() {
-        $actual = CommonUtils::isEmptyOrBlankStringOrNull('');
+        $actual = CommonUtils::isEmptyOrBlank('');
         $this->assertTrue($actual);
     }
 
     public function testIsEmptyOrBlankTestBlank() {
-        $actual = CommonUtils::isEmptyOrBlankStringOrNull('   ');
-        $this->assertTrue($actual);
-    }
-
-    public function testIsEmptyOrBlankCheckBlanksTestNotString() {
-        $actual = CommonUtils::isEmptyOrBlankStringOrNull(1231);
-        $this->assertFalse($actual);
-    }
-
-    public function testIsEmptyOrBlankCheckBlanksTestNull() {
-        $actual = CommonUtils::isEmptyOrBlankStringOrNull(null);
+        $actual = CommonUtils::isEmptyOrBlank('   ');
         $this->assertTrue($actual);
     }
 
     public function testisEmptyOrBlankIsEmpty() {
-        $actual = CommonUtils::isEmptyOrBlankStringOrNull('Hello World');
+        $actual = CommonUtils::isEmptyOrBlank('Hello World');
+        $this->assertFalse($actual);
+    }
+
+    public function testIsEmptyOrBlankTestNotTrimString() {
+        $actual = CommonUtils::isEmptyOrBlank('  Hello World         ');
         $this->assertFalse($actual);
     }
 

@@ -42,10 +42,12 @@ class EmployeeDataProvider {
 
         $employeeDtos = [];
         foreach ($array as $key => $value) {
-            $value = CommonUtils::isEmptyOrBlankStringOrNull($value) ? '' : $value;
+            $key = trim($key);
+            $value = CommonUtils::trimStringOrValue($value) ?? '';
+
             $this->validateKeyValue($key, $value);
 
-            $employeeDtos[] = new EmployeeDto(trim($key), trim($value));
+            $employeeDtos[] = new EmployeeDto($key, $value);
         }
 
         return $employeeDtos;
@@ -61,34 +63,20 @@ class EmployeeDataProvider {
      * @param $value
      */
     private function validateKeyValue(string $key, $value): void {
-        $this->validateKey($key, $value);
-
-        $this->validateValue($key, $value);
-
-        if ($key === $value) {
-            throw new InvalidArgumentException("Employee and supervisor have the same name: '$key'");
+        if ($key === '') {
+            throw new InvalidArgumentException('Json data contains empty key');
         }
-    }
 
-    private function validateKey(string $key, $value) {
-        if (CommonUtils::isEmptyOrBlankStringOrNull($key)) {
-            $errorMsg = 'Json data contains empty key';
-            if (CommonUtils::isEmptyOrBlankStringOrNull($value)) {
-                $errorMsg .= ' where also has empty value';
-            } else {
-                $errorMsg .= " where has the value: " . CommonUtils::trimStringOrValue($value);
-            }
-            throw new InvalidArgumentException($errorMsg);
-        }
-    }
-
-    private function validateValue(string $key, $value) {
         if (!is_string($value)) {
             if (is_object($value) || is_array($value)) {
                 throw new InvalidArgumentException('Json file content should not contain nested multi-dimensional json');
             }
 
-            throw new InvalidArgumentException("Value is not a string - for Key: $key");
+            throw new InvalidArgumentException("Value is not a string - for Key: " . $key);
+        }
+
+        if ($key === $value) {
+            throw new InvalidArgumentException("Employee and supervisor have the same name: '$key'");
         }
     }
 

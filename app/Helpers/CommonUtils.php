@@ -60,14 +60,14 @@ class CommonUtils {
     }
 
     /**
-     * Check the value input is null or empty/blank string
+     * Check the string input empty or blank
      *
-     * @param $input
+     * @param $input string value to check
      *
-     * @return true if the value input is empty/blank string or null, false for otherwise
+     * @return true if the string input is empty or blank string, false for otherwise
      */
-    public static function isEmptyOrBlankStringOrNull($input): bool {
-        return $input === null || (is_string($input) && trim($input) === '');
+    public static function isEmptyOrBlank(string $input): bool {
+        return trim($input) === '';
     }
 
     /**
