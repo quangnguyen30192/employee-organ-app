@@ -34,7 +34,7 @@ class EmployeeTreeService {
      */
     public function findBoss(array $employeeDtos): string {
         if (count($employeeDtos) == 0) {
-            throw new InvalidArgumentException("There is no employee dtos provided");
+            throw new InvalidArgumentException('There is no employee dtos provided');
         }
 
         $employees = collect($employeeDtos)->map(function ($employeeDto) {
@@ -54,7 +54,7 @@ class EmployeeTreeService {
          * There will be definitely at least one boss if the json data makes sense.
          */
         if (count($bossDtos) == 0) {
-            throw new InvalidArgumentException("There is a loop in json");
+            throw new InvalidArgumentException('There is a loop in json');
         }
 
         return $this->findBossName($bossDtos);
@@ -87,7 +87,7 @@ class EmployeeTreeService {
         })->toArray();
 
         if (!CommonUtils::hasIdenticalElements($bossNames)) {
-            throw new InvalidArgumentException("There is more than one top boss: " . implode(', ', array_unique($bossNames)));
+            throw new InvalidArgumentException('There is more than one top boss: ' . implode(', ', array_unique($bossNames)));
         }
 
         return $this->getValidBossName($employeeDtos->first());

@@ -67,7 +67,7 @@ class CommonUtils {
      * @return true if the input string is empty or blank, false for otherwise
      */
     public static function isEmptyOrBlank(string $str): bool {
-        return trim($str) === "";
+        return trim($str) === '';
     }
 
     /**

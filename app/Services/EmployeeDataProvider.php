@@ -77,19 +77,19 @@ class EmployeeDataProvider {
     private function validateKeyValue(string $key, $value): void {
         if (!is_string($value)) {
             if (is_object($value) || is_array($value)) {
-                throw new InvalidArgumentException("Json file content should not contain nested multi-dimensional json");
+                throw new InvalidArgumentException('Json file content should not contain nested multi-dimensional json');
             }
 
             throw new InvalidArgumentException("Value is not a string - for Key: $key");
         }
 
         if (CommonUtils::isEmptyOrBlank($key)) {
-            $errorMsg = "Json data contains empty key" . ($value == "" ? " which also has empty value" : " which has the value: $value");
+            $errorMsg = 'Json data contains empty key' . ($value === '' ? ' which also has empty value' : " which has the value: $value");
             throw new InvalidArgumentException($errorMsg);
         }
 
         if ($key === $value) {
-            throw new InvalidArgumentException("Employee and supervisor have the same name: '$key''");
+            throw new InvalidArgumentException("Employee and supervisor have the same name: '$key'");
         }
     }
 
@@ -107,7 +107,7 @@ class EmployeeDataProvider {
     private function validateJson(string $json): array {
         $arr = CommonUtils::isValidJson($json);
         if (!$arr) {
-            throw new InvalidArgumentException("Json string input is not valid");
+            throw new InvalidArgumentException('Json string input is not valid');
         }
 
         try {

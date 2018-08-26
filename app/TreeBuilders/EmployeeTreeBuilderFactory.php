@@ -26,7 +26,7 @@ class EmployeeTreeBuilderFactory {
      * @return EmployeeTreeBuilder
      */
     public static function createTreeBuilder(string $dataViewType = 'json'): EmployeeTreeBuilderBase {
-        if ($dataViewType === "json") {
+        if ($dataViewType === 'json') {
             // create EmployeeTreeBuilder from IoC container in which also provides EmployeeTreeService rather than using new operator
             return Container::getInstance()->make(EmployeeTreeBuilder::class);
         }

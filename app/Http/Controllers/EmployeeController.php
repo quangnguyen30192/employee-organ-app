@@ -20,7 +20,7 @@ class EmployeeController extends Controller {
     }
 
     public function index() {
-        return view('index')->with('dataViewTypes', ["json", "chart"]);
+        return view('index')->with('dataViewTypes', ['json', 'chart']);
     }
 
     /**
