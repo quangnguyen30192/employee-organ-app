@@ -16,7 +16,7 @@ use App\Services\EmployeeTreeService;
  * Class that has responsible for building up an employee tree
  *
  * The employee tree would have different json format base on its node - EmployeeNode, which has to implement JsonSerializer
- * to define the proper json output
+ * to define the proper json output format of the tree.
  */
 abstract class EmployeeTreeBuilderBase {
 
@@ -45,9 +45,9 @@ abstract class EmployeeTreeBuilderBase {
      * @return EmployeeNode that represents as an employee tree
      */
     public function buildTree(array $employeeDtos): EmployeeNode {
-        $boss = $this->employeeTreeService->findBoss($employeeDtos);
+        $bossName = $this->employeeTreeService->findBoss($employeeDtos);
 
-        $employeeRootNode = $this->createEmployeeNode($boss);
+        $employeeRootNode = $this->createEmployeeNode($bossName);
         $this->buildTreeFromEmployeeNode($employeeRootNode, $employeeDtos);
 
         return $employeeRootNode;
@@ -59,8 +59,8 @@ abstract class EmployeeTreeBuilderBase {
      *
      * The input employee node would become a tree that has full hierarchy after processed
      *
-     * @param $employeeNode
-     * @param $employeeDtos
+     * @param $employeeNode considered as the root node of the tree
+     * @param $employeeDtos employee data used to build up the tree
      */
     private function buildTreeFromEmployeeNode(EmployeeNode $employeeNode, array $employeeDtos): void {
         $subordinates = $this->employeeTreeService->findEmployeesUnderSupervisor($employeeNode->getEmployeeName(), $employeeDtos);
@@ -79,7 +79,7 @@ abstract class EmployeeTreeBuilderBase {
      *
      * @param $employeeName
      *
-     * @return EmployeeNode
+     * @return EmployeeNode the employee node has to implement JsonSerializer to define json output format of the tree
      */
     protected abstract function createEmployeeNode(string $employeeName): EmployeeNode;
 }

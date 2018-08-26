@@ -19,7 +19,7 @@ class EmployeeDto {
     private $supervisor;
 
     /**
-     * Constructor.
+     * EmployeeDto constructor.
      *
      * @param $employee
      * @param $supervisor

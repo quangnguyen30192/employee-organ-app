@@ -15,15 +15,22 @@ use Illuminate\Container\Container;
  */
 class EmployeeTreeBuilderFactory {
 
+    /**
+     * EmployeeTreeBuilderFactory constructor.
+     *
+     * Private constructor to prevent creating new instances outside this class.
+     */
     private function __construct() {
     }
 
     /**
-     * Factory method to create EmployeeTreeBuilder base on data view type
+     * Factory method to create EmployeeTreeBuilderBase subclasses from data view type
+     *
+     * EmployeeTreeBuilderBase subclasses should be created from this factory method - not from its constructor
      *
      * @param dataViewType json or chart
      *
-     * @return EmployeeTreeBuilder
+     * @return EmployeeTreeBuilderBase
      */
     public static function createTreeBuilder(string $dataViewType = 'json'): EmployeeTreeBuilderBase {
         if ($dataViewType === 'json') {

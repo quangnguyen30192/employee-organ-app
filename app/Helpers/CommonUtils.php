@@ -42,7 +42,7 @@ class CommonUtils {
      *
      * @param $array array of strings
      *
-     * @return true if all elements in an array of strings are identical, false for otherwise or the array is not valid
+     * @return true if all elements in an array of strings are identical, false for otherwise
      */
     public static function hasIdenticalElements(array $array): bool {
         if (count($array) == 0) {

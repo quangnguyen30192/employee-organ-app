@@ -29,13 +29,13 @@ class EmployeeDataProvider {
     }
 
     /**
-     * Parse the json string input and convert them into an array of dto objects
+     * Parse the json string input and convert them into an array of data transfer objects
      *
      * @param $json json string input
      *
      * @return array of EmployeeDtos
      *
-     * @throws InvalidArgumentException if the json string input is invalid or if the json has duplicate keys
+     * @throws InvalidArgumentException if the json string input is invalid (not well-formed, syntax, key duplication, ...)
      */
     public function parseEmployeeData(string $json): array {
         $array = $this->validateJson($json);
@@ -54,13 +54,18 @@ class EmployeeDataProvider {
     }
 
     /**
-     * Validate the input which is the pair of value (supervisor) and key (employee), the value should be a string
+     * Validate the key (employee) and value (supervisor) of each json element
      *
-     * @throws InvalidArgumentException if the value is neither string nor an object or array (consider there are
-     * nested multi-dimensional in the json input)
+     * The key should not be empty
+     * The value should be a string or null (in case that the key - supervisor is null or empty/blank string, it means that
+     * the employee is the top boss)
      *
-     * @param $key
-     * @param $value
+     * @throws InvalidArgumentException
+     * if the value is neither string nor object nor array (considered as there are nested multi-dimensional in the json input)
+     * if the key is empty
+     *
+     * @param $key key of json element as string - represents for employee
+     * @param $value value of json element - represents for supervisor
      */
     private function validateKeyValue(string $key, $value): void {
         if ($key === '') {
@@ -85,7 +90,7 @@ class EmployeeDataProvider {
      *
      * To check the key duplication, we're using: https://github.com/zaach/jsonlint
      *
-     * @param $json
+     * @param $json json string input
      *
      * @return associative array decoded from the valid json
      *

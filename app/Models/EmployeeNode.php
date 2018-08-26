@@ -19,6 +19,11 @@ class EmployeeNode implements JsonSerializable {
     private $employeeName;
     private $subordinates;
 
+    /**
+     * EmployeeNode constructor.
+     *
+     * @param $employeeName
+     */
     public function __construct(string $employeeName) {
         $this->employeeName = $employeeName;
         $this->subordinates = [];

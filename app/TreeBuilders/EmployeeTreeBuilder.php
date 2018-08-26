@@ -13,7 +13,7 @@ use App\Services\EmployeeTreeService;
 
 /**
  * Implementation of EmployeeTreeBuilderBase to build up an employee tree which has json format to show up to the user
- * (as the main requirement)
+ * (conform to the main requirement)
  */
 class EmployeeTreeBuilder extends EmployeeTreeBuilderBase {
 

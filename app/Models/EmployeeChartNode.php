@@ -9,8 +9,7 @@
 namespace App\Models;
 
 /**
- * Class represents a node in an employee hierarchy chart. it's different to the employee tree that it would have different
- * json format after serialized.
+ * Class represents a node in an employee hierarchy chart.
  */
 class EmployeeChartNode extends EmployeeNode {
 
