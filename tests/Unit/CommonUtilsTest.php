@@ -143,6 +143,11 @@ class CommonUtilsTest extends TestCase {
         $this->assertSame('Hello World', $actual);
     }
 
+    public function testTrimStringOrValueTestEmpty() {
+        $actual = CommonUtils::trimStringOrValue('            ');
+        $this->assertSame('', $actual);
+    }
+
     public function testTrimStringOrValueTestNotString() {
         $actual = CommonUtils::trimStringOrValue(1123);
         $this->assertSame(1123, $actual);

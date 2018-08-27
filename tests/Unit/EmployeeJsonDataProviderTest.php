@@ -141,7 +141,7 @@ class EmployeeJsonDataProviderTest extends TestCase {
         $this->employeeDataProvider->parseEmployeeData($testString);
     }
 
-    public function testParseJsonShouldNotHaveKeyAsString() {
+    public function testParseJsonShouldOnlyHaveKeyAsString() {
         $testString = '{ "Pete": "Nick", Barbara: 1, "Nick": "Sophie", "Sophie": "Jonas" }';
 
         $this->expectException('InvalidArgumentException');
@@ -200,7 +200,7 @@ class EmployeeJsonDataProviderTest extends TestCase {
         $this->employeeDataProvider->parseEmployeeData($testString);
     }
 
-    public function testJsonShouldNotHaveTheSameEmployeeSupervisor() {
+    public function testJsonShouldNotHaveEmployeeSupervisorHaveTheSameValue() {
         $testString = '{ "Pete": "Pete", "Nick": "Sophie", "Sophie": "Jonas" }';
 
         $this->expectException('InvalidArgumentException');

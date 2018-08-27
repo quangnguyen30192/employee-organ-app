@@ -118,13 +118,13 @@ class EmployeeTreeServiceTest extends TestCase {
         $this->assertSame($actual, "Pete");
     }
 
-    public function testFindBossEmptyEmployeeData() {
+    public function testFindBossWithEmptyEmployeeData() {
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('There is no employee dtos provided');
         $this->employeeTreeService->findBoss([]);
     }
 
-    public function testLoopJsonData() {
+    public function testFindBossFindLoopJsonData() {
         $testString = '{ "Tina": "Pete", "Pete": "Tina" }';
         $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
 
@@ -133,7 +133,7 @@ class EmployeeTreeServiceTest extends TestCase {
         $this->employeeTreeService->findBoss($employeeData);
     }
 
-    public function testLoopJsonDataComplexHierarchy() {
+    public function testFindBossFindLoopJsonDataComplexHierarchy() {
         $testString = '{ "Mina": "Nick", "Tim": "Tina", "Tina": "Mina", "Nick" : "Tim" }';
         $employeeData = $this->employeeDataProvider->parseEmployeeData($testString);
 
