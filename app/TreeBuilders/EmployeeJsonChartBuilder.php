@@ -16,10 +16,10 @@ use App\Services\EmployeeTreeService;
  * Implementation of EmployeeTreeBuilderBase to build up an employee tree which has json format conforming
  * to employee chart at the view: OrganChart (https://github.com/dabeng/OrgChart)
  */
-class EmployeeChartBuilder extends EmployeeTreeBuilderBase {
+class EmployeeJsonChartBuilder extends EmployeeTreeBuilderBase {
 
     /**
-     * EmployeeChartBuilder constructor.
+     * EmployeeJsonChartBuilder constructor.
      *
      * @param EmployeeTreeService $employeeTreeService
      */

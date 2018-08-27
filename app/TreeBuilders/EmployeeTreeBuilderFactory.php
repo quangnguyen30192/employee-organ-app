@@ -38,6 +38,6 @@ class EmployeeTreeBuilderFactory {
             return Container::getInstance()->make(EmployeeTreeBuilder::class);
         }
 
-        return Container::getInstance()->make(EmployeeChartBuilder::class);
+        return Container::getInstance()->make(EmployeeJsonChartBuilder::class);
     }
 }
