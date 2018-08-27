@@ -24,17 +24,16 @@
         </form>
     </div>
 
-    <div class="container">
-
-        <div class="col-md-6">
+    <div class="container-fluid">
+        <div class="col-md-4">
             <div class="form-group collapse" id="contentPreview">
                 <h1>Preview</h1>
-                <textarea name="fileContent"></textarea>
+                <textarea name="fileContent" readonly></textarea>
                 <div class="alert alert-danger collapse" id="errorMessage"></div>
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="form-group collapse" id="jsonView">
                 <h1>Json Result</h1>
                 <textarea></textarea>

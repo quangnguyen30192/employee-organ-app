@@ -1,1 +1,11 @@
-{ "Pete": "Nick", "Barbara": "Nick", "Nick": "Sophie", "Sophie": "Jonas" }
+{
+  "Pete": "Nick",
+  "Barbara": "Nick",
+  "Nick": "Sophie",
+  "Micheal": "Sophie",
+  "Sophie": "Jonas",
+  "Tomas": "Jonas",
+  "Misak": "Tomas",
+  "Ironman": "Tomas",
+  "Tim": "Ironman"
+}
