@@ -1,7 +1,7 @@
 textarea {
     font-size: 1.6rem;
-    font-family: monospace;
-    height: 40em;
+    font-family: monospace !important;
+    height: 35em;
     width: 100%;
 }
 
